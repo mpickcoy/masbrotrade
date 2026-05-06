@@ -1,1 +1,4 @@
 project_id = "okjetdtvcrenzzlnxgbm"
+
+[functions.trade-chat]
+verify_jwt = true
