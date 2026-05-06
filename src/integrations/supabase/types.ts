@@ -14,7 +14,132 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      capital_movements: {
+        Row: {
+          amount: number
+          created_at: string
+          id: string
+          kind: string
+          note: string | null
+          occurred_at: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          id?: string
+          kind: string
+          note?: string | null
+          occurred_at?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          id?: string
+          kind?: string
+          note?: string | null
+          occurred_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      chat_messages: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          role: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          currency: string
+          display_name: string | null
+          id: string
+          initial_capital: number
+          onboarded: boolean
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          currency?: string
+          display_name?: string | null
+          id: string
+          initial_capital?: number
+          onboarded?: boolean
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          currency?: string
+          display_name?: string | null
+          id?: string
+          initial_capital?: number
+          onboarded?: boolean
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      trades: {
+        Row: {
+          created_at: string
+          entry_price: number | null
+          exit_price: number | null
+          id: string
+          lot_size: number | null
+          notes: string | null
+          pair: string
+          pnl: number
+          side: string
+          traded_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          entry_price?: number | null
+          exit_price?: number | null
+          id?: string
+          lot_size?: number | null
+          notes?: string | null
+          pair: string
+          pnl?: number
+          side: string
+          traded_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          entry_price?: number | null
+          exit_price?: number | null
+          id?: string
+          lot_size?: number | null
+          notes?: string | null
+          pair?: string
+          pnl?: number
+          side?: string
+          traded_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
