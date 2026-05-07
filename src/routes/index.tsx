@@ -13,25 +13,95 @@ import {
   Clock,
   ArrowRight,
   CheckCircle2,
+  HelpCircle,
 } from "lucide-react";
 
+const SITE_URL = "https://masbrotrade.lovable.app";
+const OG_IMAGE =
+  "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/5bc15cad-4912-4417-af07-cffbf2781c7b/id-preview-1ee85e4e--8662380e-a684-4711-a96c-714a3bebd4e8.lovable.app-1778097858282.png";
+
+const FAQS = [
+  {
+    q: "Apa itu TradeJournal?",
+    a: "TradeJournal adalah aplikasi jurnal trading berbasis AI yang membantu trader mencatat transaksi, melacak modal, serta menganalisis profit harian, mingguan, dan bulanan secara otomatis.",
+  },
+  {
+    q: "Bagaimana cara kerja asisten AI-nya?",
+    a: "Cukup ketik trade Anda dengan bahasa bebas, misalnya 'Long BTC entry 65000 exit 65500 lot 0.1 profit 50'. AI akan mengekstrak pair, arah, entry, exit, lot, dan P/L lalu menyimpannya ke jurnal Anda setelah konfirmasi.",
+  },
+  {
+    q: "Apakah TradeJournal gratis?",
+    a: "Ya, TradeJournal gratis selamanya untuk fitur inti pencatatan trade, manajemen modal, dan statistik performa. Tidak diperlukan kartu kredit untuk mendaftar.",
+  },
+  {
+    q: "Apakah data trading saya aman?",
+    a: "Setiap akun terisolasi dengan Row Level Security tingkat database, sehingga hanya Anda yang dapat mengakses data trading Anda sendiri.",
+  },
+  {
+    q: "Instrumen apa saja yang bisa dicatat?",
+    a: "Anda bisa mencatat trade dari berbagai pasar — forex, crypto, saham, indeks, maupun komoditas. AI mengenali pair umum dan menyimpan format apa pun yang Anda gunakan.",
+  },
+];
+
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "TradeJournal — Jurnal Trading Cerdas dengan Asisten AI" },
-      {
-        name: "description",
-        content:
-          "Catat trade cukup dengan mengetik. Asisten AI otomatis menyimpan dan menghitung profit harian, mingguan, dan bulanan Anda.",
-      },
-      { property: "og:title", content: "TradeJournal — Jurnal Trading Cerdas dengan Asisten AI" },
-      {
-        property: "og:description",
-        content:
-          "Catat trade cukup dengan mengetik. Asisten AI otomatis menyimpan dan menghitung profit harian, mingguan, dan bulanan Anda.",
-      },
-    ],
-  }),
+  head: () => {
+    const title = "TradeJournal — Jurnal Trading Cerdas dengan Asisten AI";
+    const description =
+      "Catat trade cukup dengan mengetik. Asisten AI otomatis menyimpan trade dan menghitung profit harian, mingguan, dan bulanan Anda. Gratis, aman, dan cepat.";
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        {
+          name: "keywords",
+          content:
+            "jurnal trading, trading journal, asisten AI trading, catatan trading, jurnal forex, jurnal crypto, profit harian, win rate, manajemen modal trading",
+        },
+        { name: "robots", content: "index, follow, max-image-preview:large" },
+        { name: "author", content: "TradeJournal" },
+        { name: "theme-color", content: "#0a0f0d" },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: SITE_URL },
+        { property: "og:site_name", content: "TradeJournal" },
+        { property: "og:locale", content: "id_ID" },
+        { property: "og:image", content: OG_IMAGE },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
+        { name: "twitter:image", content: OG_IMAGE },
+      ],
+      links: [{ rel: "canonical", href: SITE_URL + "/" }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "WebApplication",
+                name: "TradeJournal",
+                url: SITE_URL,
+                applicationCategory: "FinanceApplication",
+                operatingSystem: "Any",
+                description,
+                offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+              },
+              {
+                "@type": "FAQPage",
+                mainEntity: FAQS.map((f) => ({
+                  "@type": "Question",
+                  name: f.q,
+                  acceptedAnswer: { "@type": "Answer", text: f.a },
+                })),
+              },
+            ],
+          }),
+        },
+      ],
+    };
+  },
   component: Landing,
 });
 
@@ -221,6 +291,31 @@ function Landing() {
               <h3 className="mt-3 font-display text-lg font-semibold">{s.title}</h3>
               <p className="mt-1.5 text-sm text-muted-foreground">{s.desc}</p>
             </div>
+          ))}
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="mx-auto max-w-3xl px-4 py-16 sm:py-24">
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 className="font-display text-3xl font-bold sm:text-4xl">Pertanyaan Umum</h2>
+          <p className="mt-3 text-muted-foreground">Hal-hal yang sering ditanyakan trader sebelum mulai.</p>
+        </div>
+        <div className="mt-10 space-y-3">
+          {FAQS.map((f) => (
+            <details
+              key={f.q}
+              className="group rounded-2xl border border-border bg-card/60 p-5 backdrop-blur open:bg-card"
+            >
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-medium">
+                <span className="flex items-center gap-2">
+                  <HelpCircle className="size-4 text-primary" />
+                  {f.q}
+                </span>
+                <span className="text-muted-foreground transition group-open:rotate-45">+</span>
+              </summary>
+              <p className="mt-3 text-sm text-muted-foreground">{f.a}</p>
+            </details>
           ))}
         </div>
       </section>
