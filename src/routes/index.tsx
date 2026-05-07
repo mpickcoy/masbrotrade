@@ -295,6 +295,31 @@ function Landing() {
         </div>
       </section>
 
+      {/* FAQ */}
+      <section className="mx-auto max-w-3xl px-4 py-16 sm:py-24">
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 className="font-display text-3xl font-bold sm:text-4xl">Pertanyaan Umum</h2>
+          <p className="mt-3 text-muted-foreground">Hal-hal yang sering ditanyakan trader sebelum mulai.</p>
+        </div>
+        <div className="mt-10 space-y-3">
+          {FAQS.map((f) => (
+            <details
+              key={f.q}
+              className="group rounded-2xl border border-border bg-card/60 p-5 backdrop-blur open:bg-card"
+            >
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-medium">
+                <span className="flex items-center gap-2">
+                  <HelpCircle className="size-4 text-primary" />
+                  {f.q}
+                </span>
+                <span className="text-muted-foreground transition group-open:rotate-45">+</span>
+              </summary>
+              <p className="mt-3 text-sm text-muted-foreground">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="mx-auto max-w-6xl px-4 pb-24">
         <div className="relative overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-[oklch(0.30_0.12_155_/_0.5)] via-card to-[oklch(0.25_0.10_230_/_0.4)] p-8 text-center sm:p-14">
