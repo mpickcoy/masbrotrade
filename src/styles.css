@@ -1,0 +1,82 @@
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Space+Grotesk:wght@400;500;600;700;800&display=swap");
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-loss: var(--loss);
+  --color-loss-foreground: var(--loss-foreground);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.75rem;
+  /* Deep dark finance theme matching tradedashboard */
+  --background: #050810;
+  --foreground: #e8edf8;
+  --card: rgba(13,20,36,0.75);
+  --card-foreground: #e8edf8;
+  --popover: #0d1424;
+  --popover-foreground: #e8edf8;
+  --primary: #00ffa3;
+  --primary-foreground: #050810;
+  --secondary: rgba(255,255,255,0.06);
+  --secondary-foreground: #e8edf8;
+  --muted: rgba(255,255,255,0.04);
+  --muted-foreground: #5a6585;
+  --accent: rgba(0,255,163,0.08);
+  --accent-foreground: #00ffa3;
+  --destructive: #ff4d6d;
+  --destructive-foreground: #fff;
+  --success: #00ffa3;
+  --success-foreground: #050810;
+  --loss: #ff4d6d;
+  --loss-foreground: #fff;
+  --border: rgba(255,255,255,0.06);
+  --input: rgba(255,255,255,0.04);
+  --ring: #00ffa3;
+  --chart-1: #00ffa3;
+  --chart-2: #ff4d6d;
+  --chart-3: #00cfff;
+  --chart-4: #ffb800;
+  --chart-5: #a259ff;
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html, body { background-color: var(--background); color: var(--foreground); }
+  body { font-family: 'DM Mono', monospace; }
+  .font-display { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
+}
