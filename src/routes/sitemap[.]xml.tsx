@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 const SITE_URL = "https://masbrotrade.lovable.app";
-const ROUTES = ["/", "/login", "/signup"];
+const ROUTES = ["/", "/login", "/signup", "/privacy", "/terms"];
 
 export const Route = createFileRoute("/sitemap.xml")({
   server: {

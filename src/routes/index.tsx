@@ -348,8 +348,14 @@ function Landing() {
         </div>
       </section>
 
-      <footer className="border-t border-border/60 py-8 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} TradeJournal · Dibuat untuk trader yang serius
+      <footer className="border-t border-border/60 py-8">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 text-xs text-muted-foreground sm:flex-row">
+          <p>© {new Date().getFullYear()} TradeJournal · Dibuat untuk trader yang serius</p>
+          <nav className="flex items-center gap-4">
+            <Link to="/privacy" className="hover:text-foreground">Kebijakan Privasi</Link>
+            <Link to="/terms" className="hover:text-foreground">Syarat & Ketentuan</Link>
+          </nav>
+        </div>
       </footer>
     </div>
   );
