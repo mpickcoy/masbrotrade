@@ -93,7 +93,14 @@ function Login() {
           <h1 className="font-display text-3xl font-bold">TradeJournal</h1>
           <p className="mt-1 text-sm text-muted-foreground">Masuk untuk mengakses jurnal Anda</p>
         </div>
-        <form onSubmit={submit} className="space-y-4 rounded-2xl border bg-card p-6">
+        <div className="rounded-2xl border bg-card p-6 space-y-4">
+          <Button type="button" variant="outline" className="w-full" onClick={signInGoogle}>
+            <GoogleIcon /> Lanjutkan dengan Google
+          </Button>
+          <div className="flex items-center gap-3 text-xs text-muted-foreground">
+            <div className="h-px flex-1 bg-border" /> atau <div className="h-px flex-1 bg-border" />
+          </div>
+        <form onSubmit={submit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input id="email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
