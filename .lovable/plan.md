@@ -1,76 +1,34 @@
-## Aplikasi Jurnal Trading dengan Asisten AI
+## Tujuan
+Membuat pengunjung mudah masuk/daftar dari landing page, dan menambahkan opsi login dengan Google (Gmail) di samping email/password yang sudah ada.
 
-Aplikasi web untuk mencatat aktivitas trading Anda. Cukup ceritakan trade Anda ke kotak chat AI, dan aplikasi otomatis menyimpan data ke jurnal serta menghitung statistik.
+## Yang akan dilakukan
 
-### Fitur Utama
+### 1. Aktifkan Google OAuth (Lovable Cloud Managed)
+- Jalankan `configure_social_auth` dengan provider `google`.
+- Ini otomatis membuat modul `src/integrations/lovable/` dan menginstal package `@lovable.dev/cloud-auth-js`.
+- Tidak perlu API key — pakai kredensial Google yang dikelola Lovable Cloud.
+- Email/password tetap aktif (tidak di-disable).
 
-1. **Autentikasi**
-   - Login & sign-up dengan email/password (via Lovable Cloud)
-   - Setiap user punya jurnal terpisah & aman
+### 2. Update halaman Login (`src/routes/login.tsx`)
+- Tambah tombol **"Lanjutkan dengan Google"** di atas form email/password.
+- Tambah pemisah "atau" antara tombol Google dan form.
+- Pakai `lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin })`.
+- Tangani error dengan toast.
 
-2. **Manajemen Modal**
-   - Set modal awal saat onboarding
-   - Catat top-up (deposit) & withdraw kapan saja
-   - Saldo berjalan = modal awal + deposit − withdraw + akumulasi P/L
+### 3. Update halaman Signup (`src/routes/signup.tsx`)
+- Tambah tombol **"Daftar dengan Google"** dengan flow yang sama.
+- Pemisah "atau" + form email/password tetap.
 
-3. **Pencatatan Trade (lengkap)**
-   Per trade tersimpan:
-   - Pair/aset (mis. BTC/USDT, EUR/USD, XAU)
-   - Tanggal & waktu
-   - Arah (Long / Short)
-   - Entry price, Exit price
-   - Lot size / quantity
-   - Profit / Loss (nominal)
-   - Catatan strategi (opsional)
+### 4. Update Landing Page (`src/routes/index.tsx`)
+- Pastikan navbar/hero punya tombol **"Masuk"** (link ke `/login`) dan **"Daftar Gratis"** (link ke `/signup`) yang menonjol.
+- Tambah CTA "Daftar Gratis" tambahan di akhir section fitur (sebelum footer) agar pengunjung yang scroll sampai bawah langsung bisa daftar.
+- Periksa apakah CTA sudah cukup mencolok — jika belum, beri styling gradient/shadow yang sama dengan hero.
 
-4. **Asisten AI (input semi-terstruktur)**
-   - Kotak chat di dashboard
-   - Anda ketik bebas, mis: *"Tadi long BTC entry 65000 exit 65500 lot 0.1 profit 50"*
-   - AI mengekstrak data → jika ada field penting yang kurang, AI bertanya balik
-   - Setelah lengkap, AI menampilkan ringkasan & meminta konfirmasi sebelum simpan
-   - AI juga bisa mencatat deposit/withdraw modal lewat chat
-   - Powered by Lovable AI Gateway (default: Gemini 3 Flash)
+## Yang TIDAK diubah
+- Logika auth context (`src/lib/auth-context.tsx`) — Supabase client tetap menangani session.
+- Halaman dashboard, RLS, atau database.
+- Tidak menambahkan provider lain (Apple, dll) kecuali diminta.
 
-5. **Dashboard Statistik**
-   - Kartu ringkasan: Modal awal, Saldo saat ini, Total P/L, Total Loss, Win rate
-   - Profit Harian / Mingguan / Bulanan (toggle periode)
-   - Grafik equity curve
-   - Grafik P/L per periode (bar chart)
-
-6. **Riwayat Trade**
-   - Tabel semua trade dengan filter (tanggal, pair, win/loss)
-   - Edit & hapus trade manual jika perlu
-
-### Halaman
-
-- `/login`, `/signup`
-- `/onboarding` — set modal awal (sekali, untuk user baru)
-- `/` (dashboard) — statistik + AI chat box + trade terbaru
-- `/trades` — riwayat lengkap & filter
-- `/capital` — riwayat deposit/withdraw + tombol tambah
-
-### Detail Teknis
-
-- **Stack**: TanStack Start + React + Tailwind + shadcn/ui + Recharts
-- **Backend**: Lovable Cloud (auth + Postgres + RLS)
-- **AI**: Lovable AI Gateway via server function, structured output (tool calling) untuk parsing trade
-- **Tabel database**:
-  - `profiles` — modal awal, mata uang
-  - `trades` — semua field trade di atas, FK ke user
-  - `capital_movements` — deposit/withdraw, FK ke user
-  - `chat_messages` — riwayat chat AI per user
-- RLS aktif di semua tabel (user hanya akses datanya sendiri)
-- Statistik dihitung via SQL view atau agregasi di server function
-
-### Desain
-
-- Tema gelap finansial: background slate-950, accent emerald (profit) & rose (loss)
-- Tipografi: display font tegas untuk angka besar, sans-serif bersih untuk body
-- Mobile-first (viewport user 360px) — kartu statistik 2 kolom di mobile, grid 4 di desktop
-- AI chat box prominent di dashboard, sticky di bawah pada mobile
-
-### Yang TIDAK termasuk (bisa ditambah nanti)
-- Import dari MT4/MT5/broker
-- Multi-akun trading
-- Analisis AI mendalam (saran strategi, pattern recognition)
-- Export PDF/CSV
+## Catatan
+- Lovable Cloud Managed Google Auth aman dipakai langsung, pengguna bisa nanti ganti ke kredensial Google sendiri lewat Cloud settings jika mau branding sendiri.
+- Setelah Google login sukses, user diarahkan ke `/` (dashboard) sesuai flow yang sudah ada.
