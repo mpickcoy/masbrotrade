@@ -10,10 +10,24 @@ import {
   ShieldCheck,
   Sparkles,
   TrendingUp,
+  TrendingDown,
   Clock,
   ArrowRight,
   CheckCircle2,
   HelpCircle,
+  Flame,
+  Target,
+  CalendarDays,
+  PieChart,
+  Activity,
+  Award,
+  AlertTriangle,
+  Globe2,
+  Smile,
+  FileSpreadsheet,
+  Zap,
+  Trophy,
+  BarChart3,
 } from "lucide-react";
 
 const SITE_URL = "https://masbrotrade.lovable.app";
@@ -130,8 +144,8 @@ function Landing() {
     },
     {
       icon: LineChart,
-      title: "Statistik Real-time",
-      desc: "Lihat profit harian, mingguan, bulanan, win rate, dan equity curve secara live.",
+      title: "Equity Curve Live",
+      desc: "Lihat pertumbuhan modalmu lewat grafik equity yang update real-time setiap trade.",
     },
     {
       icon: Wallet,
@@ -139,18 +153,63 @@ function Landing() {
       desc: "Catat modal awal, top-up, dan withdraw. Saldo selalu sinkron dengan akumulasi P/L.",
     },
     {
-      icon: TrendingUp,
-      title: "Analisis Performa",
-      desc: "Pahami kekuatan strategi Anda lewat win rate, total loss, dan grafik performa.",
+      icon: Flame,
+      title: "Streak Profit",
+      desc: "Lacak hari profit beruntun untuk menjaga konsistensi dan motivasi tetap tinggi.",
     },
     {
-      icon: Clock,
-      title: "Cepat & Ringan",
-      desc: "Cukup beberapa detik untuk mencatat satu trade. Cocok dipakai langsung dari HP.",
+      icon: Target,
+      title: "Target Harian",
+      desc: "Set target profit per hari dan progress bar otomatis menampilkan pencapaianmu.",
+    },
+    {
+      icon: AlertTriangle,
+      title: "Max Loss Limit",
+      desc: "Batasi kerugian harian. Aplikasi ingatkan saat kamu mendekati batas — proteksi modal.",
+    },
+    {
+      icon: CalendarDays,
+      title: "Heatmap Kalender",
+      desc: "Visual kalender hari profit/loss seperti GitHub. Pola trading-mu langsung terlihat.",
+    },
+    {
+      icon: BarChart3,
+      title: "P/L Harian & Mingguan",
+      desc: "Bar chart 7 hari & 30 hari terakhir untuk memantau performa jangka pendek.",
+    },
+    {
+      icon: PieChart,
+      title: "Win/Loss Ratio",
+      desc: "Pie chart win rate, total menang, kalah, dan break-even dalam satu tampilan.",
+    },
+    {
+      icon: Trophy,
+      title: "Top Performing Pairs",
+      desc: "Tahu pair mana yang paling cuan dan mana yang menguras akunmu.",
+    },
+    {
+      icon: Zap,
+      title: "Profit Factor & R:R",
+      desc: "Metrik profesional: profit factor, average win/loss, dan max drawdown otomatis.",
+    },
+    {
+      icon: Globe2,
+      title: "Sesi Trading Live",
+      desc: "Indikator sesi Asia, London, New York — tahu kapan pasar paling aktif.",
+    },
+    {
+      icon: Smile,
+      title: "Mood Tracker",
+      desc: "Catat kondisi mental harianmu — pahami korelasi emosi dengan performa.",
+    },
+    {
+      icon: FileSpreadsheet,
+      title: "Export CSV & PDF",
+      desc: "Unduh riwayat trade ke Excel atau laporan PDF siap cetak kapan saja.",
     },
     {
       icon: ShieldCheck,
-      title: "Data Aman",
+      title: "Data Aman & Privat",
       desc: "Setiap akun terisolasi dengan keamanan database tingkat enterprise.",
     },
   ];
@@ -239,6 +298,148 @@ function Landing() {
                   <span>Arah</span><span className="text-foreground">Long</span>
                   <span>Entry / Exit</span><span className="text-foreground">65,000 → 65,500</span>
                   <span>P/L</span><span className="font-semibold text-[var(--success)]">+$50.00</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Dashboard Preview */}
+      <section className="mx-auto max-w-6xl px-4 py-16 sm:py-20">
+        <div className="mx-auto max-w-2xl text-center">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3 py-1 text-xs text-muted-foreground backdrop-blur">
+            <Activity className="size-3.5 text-primary" />
+            Dashboard yang hidup
+          </div>
+          <h2 className="font-display text-3xl font-bold sm:text-4xl">
+            Lihat performa dalam{" "}
+            <span className="bg-gradient-to-r from-[oklch(0.85_0.18_155)] to-[oklch(0.72_0.15_230)] bg-clip-text text-transparent">
+              satu layar
+            </span>
+          </h2>
+          <p className="mt-3 text-muted-foreground">
+            Profit, win rate, equity curve, streak, target harian — semuanya tersinkron otomatis tiap kali kamu catat trade.
+          </p>
+        </div>
+
+        <div className="mx-auto mt-10 max-w-5xl">
+          <div className="rounded-3xl border border-border bg-card/40 p-3 shadow-2xl shadow-[oklch(0.78_0.18_155_/_0.12)] backdrop-blur sm:p-5">
+            {/* Stat cards row */}
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {[
+                { label: "Total P/L", value: "+$2,847", sub: "+12.4% bulan ini", color: "oklch(0.78 0.18 155)", icon: TrendingUp },
+                { label: "Win Rate", value: "68.2%", sub: "47 menang / 22 kalah", color: "oklch(0.70 0.18 300)", icon: Target },
+                { label: "Total Trade", value: "69", sub: "Bulan ini", color: "oklch(0.72 0.15 230)", icon: Activity },
+                { label: "Streak 🔥", value: "5 hari", sub: "Profit beruntun", color: "oklch(0.78 0.16 50)", icon: Flame },
+              ].map((c) => {
+                const Icon = c.icon;
+                return (
+                  <div
+                    key={c.label}
+                    className="relative overflow-hidden rounded-2xl border border-border bg-background/60 p-4"
+                    style={{ boxShadow: `inset 0 1px 0 ${c.color.replace(")", " / 0.2)")}` }}
+                  >
+                    <div
+                      className="absolute -top-6 -right-6 size-20 rounded-full opacity-30 blur-2xl"
+                      style={{ background: c.color }}
+                    />
+                    <div className="relative flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-wider" style={{ color: c.color }}>
+                      <Icon className="size-3" />
+                      {c.label}
+                    </div>
+                    <div className="relative mt-2 font-display text-2xl font-bold">{c.value}</div>
+                    <div className="relative mt-1 text-[10px] text-muted-foreground">{c.sub}</div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Equity curve mock */}
+            <div className="mt-3 rounded-2xl border border-border bg-background/60 p-4">
+              <div className="mb-3 flex items-center justify-between">
+                <div>
+                  <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Equity Curve</div>
+                  <div className="font-display text-lg font-bold text-[oklch(0.78_0.18_155)]">$12,847.50</div>
+                </div>
+                <div className="flex gap-1">
+                  {["1M", "3M", "6M", "1Y"].map((p, i) => (
+                    <span
+                      key={p}
+                      className={`rounded-md px-2 py-1 text-[10px] ${
+                        i === 1 ? "bg-primary/15 text-primary" : "text-muted-foreground"
+                      }`}
+                    >
+                      {p}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <svg viewBox="0 0 400 100" className="w-full" preserveAspectRatio="none" style={{ height: 100 }}>
+                <defs>
+                  <linearGradient id="eqGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="oklch(0.78 0.18 155)" stopOpacity="0.4" />
+                    <stop offset="100%" stopColor="oklch(0.78 0.18 155)" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+                <path
+                  d="M0,80 L40,75 L80,68 L120,72 L160,55 L200,50 L240,42 L280,38 L320,28 L360,22 L400,15"
+                  fill="none"
+                  stroke="oklch(0.78 0.18 155)"
+                  strokeWidth="2"
+                />
+                <path
+                  d="M0,80 L40,75 L80,68 L120,72 L160,55 L200,50 L240,42 L280,38 L320,28 L360,22 L400,15 L400,100 L0,100 Z"
+                  fill="url(#eqGrad)"
+                />
+              </svg>
+            </div>
+
+            {/* Bottom row: weekly bars + win/loss pie */}
+            <div className="mt-3 grid gap-3 sm:grid-cols-2">
+              <div className="rounded-2xl border border-border bg-background/60 p-4">
+                <div className="mb-3 text-[10px] uppercase tracking-wider text-muted-foreground">P/L 7 Hari</div>
+                <div className="flex h-20 items-end gap-2">
+                  {[40, 65, -30, 55, 80, -20, 90].map((v, i) => (
+                    <div key={i} className="flex flex-1 flex-col items-center gap-1">
+                      <div
+                        className="w-full rounded-t"
+                        style={{
+                          height: `${Math.abs(v)}%`,
+                          background: v >= 0 ? "oklch(0.78 0.18 155)" : "oklch(0.65 0.22 25)",
+                          opacity: 0.85,
+                        }}
+                      />
+                      <span className="text-[9px] text-muted-foreground">{["S", "S", "R", "K", "J", "S", "M"][i]}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-2xl border border-border bg-background/60 p-4">
+                <div className="mb-3 text-[10px] uppercase tracking-wider text-muted-foreground">Win / Loss Ratio</div>
+                <div className="flex items-center gap-4">
+                  <svg viewBox="0 0 64 64" className="size-16">
+                    <circle cx="32" cy="32" r="28" fill="none" stroke="oklch(0.65 0.22 25)" strokeWidth="8" />
+                    <circle
+                      cx="32" cy="32" r="28" fill="none"
+                      stroke="oklch(0.78 0.18 155)" strokeWidth="8"
+                      strokeDasharray={`${68 * 1.76} 176`}
+                      transform="rotate(-90 32 32)"
+                    />
+                  </svg>
+                  <div className="space-y-1.5">
+                    <div className="flex items-center gap-2 text-xs">
+                      <span className="size-2 rounded-full bg-[oklch(0.78_0.18_155)]" />
+                      <span className="text-muted-foreground">Menang</span>
+                      <span className="font-semibold">68%</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs">
+                      <span className="size-2 rounded-full bg-[oklch(0.65_0.22_25)]" />
+                      <span className="text-muted-foreground">Kalah</span>
+                      <span className="font-semibold">32%</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
