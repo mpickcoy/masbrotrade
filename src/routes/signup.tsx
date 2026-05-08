@@ -45,20 +45,36 @@ function Signup() {
           <h1 className="font-display text-3xl font-bold">TradeJournal</h1>
           <p className="mt-1 text-sm text-muted-foreground">Buat akun baru</p>
         </div>
-        <form onSubmit={submit} className="space-y-4 rounded-2xl border bg-card p-6">
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+        <div className="rounded-2xl border bg-card p-6 space-y-4">
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full"
+            onClick={async () => {
+              const res = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
+              if (res.error) toast.error(res.error.message ?? "Gagal mendaftar dengan Google");
+            }}
+          >
+            <GoogleIcon /> Daftar dengan Google
+          </Button>
+          <div className="flex items-center gap-3 text-xs text-muted-foreground">
+            <div className="h-px flex-1 bg-border" /> atau <div className="h-px flex-1 bg-border" />
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
-            <Input id="password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} minLength={6} />
-          </div>
-          <Button type="submit" disabled={busy} className="w-full">{busy ? "Memuat..." : "Daftar"}</Button>
-          <p className="text-center text-sm text-muted-foreground">
-            Sudah punya akun? <Link to="/login" className="text-primary font-medium">Masuk</Link>
-          </p>
-        </form>
+          <form onSubmit={submit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input id="email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <Input id="password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} minLength={6} />
+            </div>
+            <Button type="submit" disabled={busy} className="w-full">{busy ? "Memuat..." : "Daftar"}</Button>
+            <p className="text-center text-sm text-muted-foreground">
+              Sudah punya akun? <Link to="/login" className="text-primary font-medium">Masuk</Link>
+            </p>
+          </form>
+        </div>
       </div>
     </div>
   );
