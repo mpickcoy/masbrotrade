@@ -119,6 +119,7 @@ function Login() {
             Belum punya akun? <Link to="/signup" className="text-primary font-medium">Daftar</Link>
           </p>
         </form>
+        </div>
       </div>
     </div>
   );
