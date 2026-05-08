@@ -144,8 +144,8 @@ function Landing() {
     },
     {
       icon: LineChart,
-      title: "Statistik Real-time",
-      desc: "Lihat profit harian, mingguan, bulanan, win rate, dan equity curve secara live.",
+      title: "Equity Curve Live",
+      desc: "Lihat pertumbuhan modalmu lewat grafik equity yang update real-time setiap trade.",
     },
     {
       icon: Wallet,
@@ -153,18 +153,63 @@ function Landing() {
       desc: "Catat modal awal, top-up, dan withdraw. Saldo selalu sinkron dengan akumulasi P/L.",
     },
     {
-      icon: TrendingUp,
-      title: "Analisis Performa",
-      desc: "Pahami kekuatan strategi Anda lewat win rate, total loss, dan grafik performa.",
+      icon: Flame,
+      title: "Streak Profit",
+      desc: "Lacak hari profit beruntun untuk menjaga konsistensi dan motivasi tetap tinggi.",
     },
     {
-      icon: Clock,
-      title: "Cepat & Ringan",
-      desc: "Cukup beberapa detik untuk mencatat satu trade. Cocok dipakai langsung dari HP.",
+      icon: Target,
+      title: "Target Harian",
+      desc: "Set target profit per hari dan progress bar otomatis menampilkan pencapaianmu.",
+    },
+    {
+      icon: AlertTriangle,
+      title: "Max Loss Limit",
+      desc: "Batasi kerugian harian. Aplikasi ingatkan saat kamu mendekati batas — proteksi modal.",
+    },
+    {
+      icon: CalendarDays,
+      title: "Heatmap Kalender",
+      desc: "Visual kalender hari profit/loss seperti GitHub. Pola trading-mu langsung terlihat.",
+    },
+    {
+      icon: BarChart3,
+      title: "P/L Harian & Mingguan",
+      desc: "Bar chart 7 hari & 30 hari terakhir untuk memantau performa jangka pendek.",
+    },
+    {
+      icon: PieChart,
+      title: "Win/Loss Ratio",
+      desc: "Pie chart win rate, total menang, kalah, dan break-even dalam satu tampilan.",
+    },
+    {
+      icon: Trophy,
+      title: "Top Performing Pairs",
+      desc: "Tahu pair mana yang paling cuan dan mana yang menguras akunmu.",
+    },
+    {
+      icon: Zap,
+      title: "Profit Factor & R:R",
+      desc: "Metrik profesional: profit factor, average win/loss, dan max drawdown otomatis.",
+    },
+    {
+      icon: Globe2,
+      title: "Sesi Trading Live",
+      desc: "Indikator sesi Asia, London, New York — tahu kapan pasar paling aktif.",
+    },
+    {
+      icon: Smile,
+      title: "Mood Tracker",
+      desc: "Catat kondisi mental harianmu — pahami korelasi emosi dengan performa.",
+    },
+    {
+      icon: FileSpreadsheet,
+      title: "Export CSV & PDF",
+      desc: "Unduh riwayat trade ke Excel atau laporan PDF siap cetak kapan saja.",
     },
     {
       icon: ShieldCheck,
-      title: "Data Aman",
+      title: "Data Aman & Privat",
       desc: "Setiap akun terisolasi dengan keamanan database tingkat enterprise.",
     },
   ];
