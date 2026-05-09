@@ -8,7 +8,8 @@ import { fmtMoney } from "@/lib/format";
 import { exportCSV, exportPDF } from "@/lib/export";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Trash2, Download, FileText, FileSpreadsheet, ArrowUpRight, ArrowDownRight, ChevronDown } from "lucide-react";
+import { Trash2, Download, FileText, FileSpreadsheet, ArrowUpRight, ArrowDownRight, ChevronDown, Share2 } from "lucide-react";
+import { SharePnlCard } from "@/components/SharePnlCard";
 import {
   DropdownMenu,
   DropdownMenuContent,
