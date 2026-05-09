@@ -111,7 +111,12 @@ function Trades() {
           </p>
         </div>
 
-        {/* Export Button */}
+        {/* Action Buttons */}
+        <div className="flex gap-2">
+        <Button variant="outline" size="sm" onClick={() => setShareOpen(true)} disabled={filtered.length === 0} className="gap-2">
+          <Share2 className="size-4" />
+          Bagikan
+        </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="sm" disabled={exporting || filtered.length === 0} className="gap-2">
