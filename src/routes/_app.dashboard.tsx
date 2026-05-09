@@ -1360,6 +1360,15 @@ function Dashboard() {
         </div>
 
       </div>
+
+      <SharePnlCard
+        open={shareOpen}
+        onOpenChange={setShareOpen}
+        trades={trades}
+        currency={currency}
+        displayName={profile?.display_name}
+        defaultPeriod="month"
+      />
     </>
   );
 }
