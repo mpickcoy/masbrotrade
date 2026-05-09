@@ -8,7 +8,8 @@ import { fmtMoney } from "@/lib/format";
 import { exportCSV, exportPDF } from "@/lib/export";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Trash2, Download, FileText, FileSpreadsheet, ArrowUpRight, ArrowDownRight, ChevronDown } from "lucide-react";
+import { Trash2, Download, FileText, FileSpreadsheet, ArrowUpRight, ArrowDownRight, ChevronDown, Share2 } from "lucide-react";
+import { SharePnlCard } from "@/components/SharePnlCard";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -50,6 +51,7 @@ function Trades() {
 
   const [period, setPeriod] = useState<PeriodFilter>("all");
   const [exporting, setExporting] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
 
   const filtered  = filterByPeriod(trades, period);
   const totalPnl  = filtered.reduce((s, t) => s + Number(t.pnl), 0);
@@ -109,7 +111,12 @@ function Trades() {
           </p>
         </div>
 
-        {/* Export Button */}
+        {/* Action Buttons */}
+        <div className="flex gap-2">
+        <Button variant="outline" size="sm" onClick={() => setShareOpen(true)} disabled={filtered.length === 0} className="gap-2">
+          <Share2 className="size-4" />
+          Bagikan
+        </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="sm" disabled={exporting || filtered.length === 0} className="gap-2">
@@ -135,6 +142,7 @@ function Trades() {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+        </div>
       </div>
 
       {/* ── Filter Period ── */}
@@ -256,6 +264,14 @@ function Trades() {
           {filtered.length} trade · Gunakan tombol <strong>Ekspor</strong> di atas untuk unduh CSV atau PDF
         </p>
       )}
+      <SharePnlCard
+        open={shareOpen}
+        onOpenChange={setShareOpen}
+        trades={filtered}
+        currency={currency}
+        displayName={profile?.display_name}
+        defaultPeriod={period === "today" ? "today" : period === "week" ? "week" : period === "month" ? "month" : "all"}
+      />
     </div>
   );
 }

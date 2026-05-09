@@ -1,34 +1,41 @@
-## Tujuan
-Membuat pengunjung mudah masuk/daftar dari landing page, dan menambahkan opsi login dengan Google (Gmail) di samping email/password yang sudah ada.
+## Fitur: Share P/L ke Sosial Media
 
-## Yang akan dilakukan
+User dapat membagikan hasil trading (P/L) ke sosial media dengan kartu gambar yang estetik, ala Spotify Wrapped / Robinhood / eToro.
 
-### 1. Aktifkan Google OAuth (Lovable Cloud Managed)
-- Jalankan `configure_social_auth` dengan provider `google`.
-- Ini otomatis membuat modul `src/integrations/lovable/` dan menginstal package `@lovable.dev/cloud-auth-js`.
-- Tidak perlu API key — pakai kredensial Google yang dikelola Lovable Cloud.
-- Email/password tetap aktif (tidak di-disable).
+### Apa yang dibangun
 
-### 2. Update halaman Login (`src/routes/login.tsx`)
-- Tambah tombol **"Lanjutkan dengan Google"** di atas form email/password.
-- Tambah pemisah "atau" antara tombol Google dan form.
-- Pakai `lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin })`.
-- Tangani error dengan toast.
+1. **Komponen baru `src/components/SharePnlCard.tsx`**
+   - Modal/dialog dengan preview kartu share (rasio 9:16 untuk Story IG/TikTok, dan 1:1 untuk feed).
+   - Toggle pilih periode: **Hari Ini · Minggu Ini · Bulan Ini · All Time**.
+   - Toggle pilih gaya kartu: **Neon Dark**, **Gradient Sunset**, **Minimal Mono**, **Holographic** (4 tema estetik).
+   - Toggle privacy: tampilkan nominal $ atau hanya % return (biar aman).
+   - Konten kartu: logo TradeJournal, nama trader, periode, **Total P/L besar** (warna hijau/merah), Win Rate, Total Trade, Best Pair, mini equity curve (SVG), tagline "Tracked with TradeJournal".
+   - Tombol: **Download PNG**, **Share** (Web Share API → IG/WA/X/Telegram), **Copy Image**, **Copy Link**.
 
-### 3. Update halaman Signup (`src/routes/signup.tsx`)
-- Tambah tombol **"Daftar dengan Google"** dengan flow yang sama.
-- Pemisah "atau" + form email/password tetap.
+2. **Generate gambar PNG**
+   - Gunakan `html-to-image` (lib kecil, ~10KB, sudah dipakai komunitas) untuk render DOM kartu → PNG resolusi tinggi (1080×1920 / 1080×1080).
+   - Web Share API Level 2 (`navigator.share({ files })`) untuk share langsung ke app sosmed di mobile; fallback ke download + tombol "Buka Instagram/WhatsApp/X" jika tidak didukung.
 
-### 4. Update Landing Page (`src/routes/index.tsx`)
-- Pastikan navbar/hero punya tombol **"Masuk"** (link ke `/login`) dan **"Daftar Gratis"** (link ke `/signup`) yang menonjol.
-- Tambah CTA "Daftar Gratis" tambahan di akhir section fitur (sebelum footer) agar pengunjung yang scroll sampai bawah langsung bisa daftar.
-- Periksa apakah CTA sudah cukup mencolok — jika belum, beri styling gradient/shadow yang sama dengan hero.
+3. **Integrasi tombol "Share" di 2 tempat**
+   - **Dashboard** (`src/routes/_app.dashboard.tsx`): tombol Share di kanan atas card Total P/L.
+   - **Riwayat Trade** (`src/routes/_app.trades.tsx`): tombol Share di header, ikut filter periode aktif.
 
-## Yang TIDAK diubah
-- Logika auth context (`src/lib/auth-context.tsx`) — Supabase client tetap menangani session.
-- Halaman dashboard, RLS, atau database.
-- Tidak menambahkan provider lain (Apple, dll) kecuali diminta.
+4. **Tracking watermark**
+   - Footer kartu: `masbrotrade.lovable.app` + ikon kecil — supaya yang lihat bisa daftar (organic growth).
 
-## Catatan
-- Lovable Cloud Managed Google Auth aman dipakai langsung, pengguna bisa nanti ganti ke kredensial Google sendiri lewat Cloud settings jika mau branding sendiri.
-- Setelah Google login sukses, user diarahkan ke `/` (dashboard) sesuai flow yang sudah ada.
+### Detail teknis
+
+- Lib baru: `html-to-image` (`bun add html-to-image`). Tidak butuh canvas/native — pure DOM-to-PNG.
+- Stats sudah tersedia via `computeStats()` di `src/lib/stats.ts`, tinggal pass + filter periode.
+- Tema kartu pakai CSS variable + gradient dari `src/styles.css` (token semantik) supaya konsisten dengan brand.
+- Tidak ada perubahan database, RLS, atau auth.
+
+### Yang TIDAK diubah
+- Tidak menyentuh schema DB, edge function, atau auth.
+- Tidak ubah landing page atau login/signup yang sudah disetujui sebelumnya.
+
+### Files
+- create `src/components/SharePnlCard.tsx`
+- edit `src/routes/_app.dashboard.tsx` (tambah trigger button + modal)
+- edit `src/routes/_app.trades.tsx` (tambah trigger button + modal)
+- `package.json` (tambah `html-to-image`)
