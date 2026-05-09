@@ -22,6 +22,7 @@ function Dashboard() {
     const saved = typeof window !== "undefined" ? localStorage.getItem("tj-mood-" + new Date().toLocaleDateString("sv-SE")) : null;
     return saved;
   });
+  const [shareOpen, setShareOpen] = useState(false);
   const navigate = useNavigate();
   const currency = profile?.currency ?? "USD";
 
