@@ -142,6 +142,7 @@ function Trades() {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+        </div>
       </div>
 
       {/* ── Filter Period ── */}
