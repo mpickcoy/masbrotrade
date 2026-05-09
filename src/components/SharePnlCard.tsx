@@ -2,14 +2,17 @@ import { useMemo, useRef, useState } from "react";
 import { toPng } from "html-to-image";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Download, Share2, Eye, EyeOff, Loader2, TrendingUp, TrendingDown, Sparkles } from "lucide-react";
+import { Download, Share2, Loader2, TrendingUp, TrendingDown, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import type { Trade } from "@/lib/queries";
 import { fmtMoney } from "@/lib/format";
+import animeHappy from "@/assets/anime-happy.png";
+import animeSad from "@/assets/anime-sad.png";
 
 type Period = "today" | "week" | "month" | "all";
 type Theme = "neon" | "sunset" | "mono" | "holo";
 type Ratio = "story" | "square";
+type DisplayMode = "money" | "percent";
 
 interface Props {
   open: boolean;
@@ -18,6 +21,7 @@ interface Props {
   currency?: string;
   displayName?: string | null;
   defaultPeriod?: Period;
+  initialCapital?: number;
 }
 
 const PERIODS: { value: Period; label: string }[] = [
@@ -84,11 +88,12 @@ export function SharePnlCard({
   currency = "USD",
   displayName,
   defaultPeriod = "all",
+  initialCapital = 0,
 }: Props) {
   const [period, setPeriod] = useState<Period>(defaultPeriod);
   const [theme, setTheme] = useState<Theme>("neon");
   const [ratio, setRatio] = useState<Ratio>("story");
-  const [hideAmount, setHideAmount] = useState(false);
+  const [mode, setMode] = useState<DisplayMode>("money");
   const [busy, setBusy] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -98,19 +103,22 @@ export function SharePnlCard({
     const totalPnl = filtered.reduce((s, t) => s + Number(t.pnl), 0);
     const wins = filtered.filter((t) => Number(t.pnl) > 0);
     const winRate = filtered.length ? (wins.length / filtered.length) * 100 : 0;
-    // best pair
     const byPair = new Map<string, number>();
     filtered.forEach((t) => byPair.set(t.pair, (byPair.get(t.pair) ?? 0) + Number(t.pnl)));
     let bestPair = "—";
     let bestVal = -Infinity;
     byPair.forEach((v, k) => { if (v > bestVal) { bestVal = v; bestPair = k; } });
-    // ROI estimate via initial capital not available here, so percent of |sum entries|
-    // Build small equity curve
     const sorted = [...filtered].sort((a, b) => +new Date(a.traded_at) - +new Date(b.traded_at));
     let bal = 0;
     const curve = [0, ...sorted.map((t) => (bal += Number(t.pnl)))];
-    return { totalPnl, winRate, bestPair: filtered.length ? bestPair : "—", count: filtered.length, curve };
-  }, [filtered]);
+    // % return: prefer initialCapital; fallback to sum of absolute pnl (return efficiency)
+    const sumAbs = filtered.reduce((s, t) => s + Math.abs(Number(t.pnl)), 0);
+    const denom = initialCapital > 0 ? initialCapital : sumAbs;
+    const pct = denom > 0 ? (totalPnl / denom) * 100 : 0;
+    const pctBasis: "capital" | "volume" | "none" =
+      initialCapital > 0 ? "capital" : sumAbs > 0 ? "volume" : "none";
+    return { totalPnl, winRate, bestPair: filtered.length ? bestPair : "—", count: filtered.length, curve, pct, pctBasis };
+  }, [filtered, initialCapital]);
 
   const periodLabel = PERIODS.find((p) => p.value === period)!.label;
   const isProfit = stats.totalPnl >= 0;
@@ -118,7 +126,7 @@ export function SharePnlCard({
   const generate = async (): Promise<Blob | null> => {
     if (!cardRef.current) return null;
     const dataUrl = await toPng(cardRef.current, {
-      pixelRatio: ratio === "story" ? 2.5 : 2.5,
+      pixelRatio: 2.5,
       cacheBust: true,
       backgroundColor: "#000",
     });
@@ -138,7 +146,7 @@ export function SharePnlCard({
       a.click();
       URL.revokeObjectURL(url);
       toast.success("Gambar diunduh ✨");
-    } catch (e) {
+    } catch {
       toast.error("Gagal membuat gambar");
     } finally {
       setBusy(false);
@@ -162,23 +170,23 @@ export function SharePnlCard({
         await handleDownload();
         toast.info("Browser tidak mendukung share langsung — gambar diunduh");
       }
-    } catch (e) {
-      // user cancelled - silent
+    } catch {
+      // user cancelled
     } finally {
       setBusy(false);
     }
   };
 
-  const cardW = ratio === "story" ? 360 : 360;
+  const cardW = 360;
   const cardH = ratio === "story" ? 640 : 360;
 
-  // Mini sparkline
+  // Sparkline
   const spark = stats.curve;
   const min = Math.min(...spark);
   const max = Math.max(...spark);
   const range = max - min || 1;
   const sparkW = cardW - 56;
-  const sparkH = ratio === "story" ? 90 : 60;
+  const sparkH = ratio === "story" ? 70 : 50;
   const path = spark.length > 1
     ? spark.map((v, i) => {
         const x = (i / (spark.length - 1)) * sparkW;
@@ -191,6 +199,23 @@ export function SharePnlCard({
   const ts = themeStyle(theme);
   const subtle = theme === "mono" ? "rgba(0,0,0,0.55)" : "rgba(255,255,255,0.7)";
   const border = theme === "mono" ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.12)";
+
+  // Main value + label
+  const mainLabel =
+    mode === "money"
+      ? `Total P/L (${currency})`
+      : stats.pctBasis === "capital"
+      ? "Return on Capital"
+      : stats.pctBasis === "volume"
+      ? "Return Efficiency"
+      : "Return";
+
+  const fmtPct = (n: number) => `${n >= 0 ? "+" : ""}${n.toFixed(2)}%`;
+  const fmtMoneySigned = (n: number) => `${n >= 0 ? "+" : ""}${fmtMoney(n, currency)}`;
+
+  const mainValue = mode === "money" ? fmtMoneySigned(stats.totalPnl) : fmtPct(stats.pct);
+  const mascot = isProfit ? animeHappy : animeSad;
+  const mascotSize = ratio === "story" ? 130 : 90;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -215,7 +240,7 @@ export function SharePnlCard({
                 overflow: "hidden",
                 borderRadius: 24,
                 fontFamily: "system-ui, -apple-system, sans-serif",
-                padding: 28,
+                padding: 24,
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
@@ -247,39 +272,64 @@ export function SharePnlCard({
                 </div>
               </div>
 
-              {/* main */}
-              <div style={{ position: "relative", textAlign: "center" }}>
-                <div style={{ fontSize: 12, color: subtle, marginBottom: 8, letterSpacing: 1, textTransform: "uppercase" }}>
-                  Total P/L
+              {/* mascot + main */}
+              <div style={{ position: "relative", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+                <img
+                  src={mascot}
+                  alt={isProfit ? "Happy" : "Sad"}
+                  width={mascotSize}
+                  height={mascotSize}
+                  style={{ width: mascotSize, height: mascotSize, objectFit: "contain", filter: `drop-shadow(0 8px 24px ${accent}55)` }}
+                  crossOrigin="anonymous"
+                />
+
+                <div style={{
+                  display: "inline-flex", alignItems: "center", gap: 6,
+                  padding: "4px 12px", borderRadius: 999,
+                  background: `${accent}22`, border: `1px solid ${accent}55`,
+                  fontSize: 10, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase",
+                  color: accent,
+                }}>
+                  {isProfit ? "PROFIT" : "LOSS"} · {mode === "money" ? "NOMINAL" : "PERSEN"}
                 </div>
+
+                <div style={{ fontSize: 11, color: subtle, letterSpacing: 0.5, textTransform: "uppercase" }}>
+                  {mainLabel}
+                </div>
+
                 <div
                   style={{
-                    fontSize: ratio === "story" ? 52 : 44,
+                    fontSize: ratio === "story" ? 44 : 36,
                     fontWeight: 800,
-                    letterSpacing: -2,
+                    letterSpacing: -1.5,
                     color: accent,
                     lineHeight: 1,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    gap: 8,
+                    gap: 6,
                   }}
                 >
-                  {isProfit ? <TrendingUp size={36} /> : <TrendingDown size={36} />}
-                  {hideAmount
-                    ? `${isProfit ? "+" : ""}${stats.totalPnl >= 0 ? "📈" : "📉"}`
-                    : `${isProfit ? "+" : ""}${fmtMoney(stats.totalPnl, currency)}`}
+                  {isProfit ? <TrendingUp size={28} /> : <TrendingDown size={28} />}
+                  {mainValue}
+                </div>
+
+                {/* secondary value (the other unit) */}
+                <div style={{ fontSize: 12, color: subtle, fontWeight: 500 }}>
+                  {mode === "money"
+                    ? stats.pctBasis !== "none" ? fmtPct(stats.pct) : ""
+                    : fmtMoneySigned(stats.totalPnl)}
                 </div>
 
                 {/* sparkline */}
-                <svg width={sparkW} height={sparkH} style={{ marginTop: 20 }}>
+                <svg width={sparkW} height={sparkH} style={{ marginTop: 6 }}>
                   <defs>
-                    <linearGradient id={`g-${theme}`} x1="0" x2="0" y1="0" y2="1">
+                    <linearGradient id={`g-${theme}-${isProfit ? "p" : "l"}`} x1="0" x2="0" y1="0" y2="1">
                       <stop offset="0%" stopColor={accent} stopOpacity="0.5" />
                       <stop offset="100%" stopColor={accent} stopOpacity="0" />
                     </linearGradient>
                   </defs>
-                  <path d={`${path} L${sparkW},${sparkH} L0,${sparkH} Z`} fill={`url(#g-${theme})`} />
+                  <path d={`${path} L${sparkW},${sparkH} L0,${sparkH} Z`} fill={`url(#g-${theme}-${isProfit ? "p" : "l"})`} />
                   <path d={path} fill="none" stroke={accent} strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
@@ -315,7 +365,7 @@ export function SharePnlCard({
                 {/* footer */}
                 <div
                   style={{
-                    marginTop: 16,
+                    marginTop: 14,
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
@@ -332,6 +382,33 @@ export function SharePnlCard({
 
           {/* Controls */}
           <div className="space-y-3">
+            <div>
+              <div className="text-xs font-medium text-muted-foreground mb-1.5">Tampilkan sebagai</div>
+              <div className="flex gap-1.5">
+                <button
+                  onClick={() => setMode("money")}
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition ${
+                    mode === "money" ? "bg-primary text-primary-foreground" : "border bg-background"
+                  }`}
+                >
+                  Nominal ($)
+                </button>
+                <button
+                  onClick={() => setMode("percent")}
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition ${
+                    mode === "percent" ? "bg-primary text-primary-foreground" : "border bg-background"
+                  }`}
+                >
+                  Persen (%)
+                </button>
+              </div>
+              {mode === "percent" && stats.pctBasis === "volume" && (
+                <p className="text-[10px] text-muted-foreground mt-1.5">
+                  ℹ️ Modal awal belum diatur — % dihitung dari total volume P/L (efisiensi return).
+                </p>
+              )}
+            </div>
+
             <div>
               <div className="text-xs font-medium text-muted-foreground mb-1.5">Periode</div>
               <div className="flex gap-1.5 flex-wrap">
@@ -366,37 +443,26 @@ export function SharePnlCard({
               </div>
             </div>
 
-            <div className="flex items-center justify-between gap-3">
-              <div>
-                <div className="text-xs font-medium text-muted-foreground mb-1.5">Format</div>
-                <div className="flex gap-1.5">
-                  <button
-                    onClick={() => setRatio("story")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-medium ${
-                      ratio === "story" ? "bg-primary text-primary-foreground" : "border bg-background"
-                    }`}
-                  >
-                    9:16 Story
-                  </button>
-                  <button
-                    onClick={() => setRatio("square")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-medium ${
-                      ratio === "square" ? "bg-primary text-primary-foreground" : "border bg-background"
-                    }`}
-                  >
-                    1:1 Feed
-                  </button>
-                </div>
+            <div>
+              <div className="text-xs font-medium text-muted-foreground mb-1.5">Format</div>
+              <div className="flex gap-1.5">
+                <button
+                  onClick={() => setRatio("story")}
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium ${
+                    ratio === "story" ? "bg-primary text-primary-foreground" : "border bg-background"
+                  }`}
+                >
+                  9:16 Story
+                </button>
+                <button
+                  onClick={() => setRatio("square")}
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium ${
+                    ratio === "square" ? "bg-primary text-primary-foreground" : "border bg-background"
+                  }`}
+                >
+                  1:1 Feed
+                </button>
               </div>
-
-              <button
-                onClick={() => setHideAmount((v) => !v)}
-                className="flex items-center gap-1.5 text-xs px-3 py-2 rounded-full border bg-background self-end"
-                title="Sembunyikan nominal"
-              >
-                {hideAmount ? <EyeOff className="size-3.5" /> : <Eye className="size-3.5" />}
-                {hideAmount ? "Privat" : "Tampil $"}
-              </button>
             </div>
           </div>
         </div>
