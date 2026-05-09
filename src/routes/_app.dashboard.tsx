@@ -1368,6 +1368,7 @@ function Dashboard() {
         currency={currency}
         displayName={profile?.display_name}
         defaultPeriod="month"
+        initialCapital={Number(profile?.initial_capital ?? 0)}
       />
     </>
   );

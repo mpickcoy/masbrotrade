@@ -271,6 +271,7 @@ function Trades() {
         currency={currency}
         displayName={profile?.display_name}
         defaultPeriod={period === "today" ? "today" : period === "week" ? "week" : period === "month" ? "month" : "all"}
+        initialCapital={Number(profile?.initial_capital ?? 0)}
       />
     </div>
   );
