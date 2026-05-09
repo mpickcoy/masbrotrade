@@ -51,6 +51,7 @@ function Trades() {
 
   const [period, setPeriod] = useState<PeriodFilter>("all");
   const [exporting, setExporting] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
 
   const filtered  = filterByPeriod(trades, period);
   const totalPnl  = filtered.reduce((s, t) => s + Number(t.pnl), 0);
