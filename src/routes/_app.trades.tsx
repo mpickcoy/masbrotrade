@@ -264,6 +264,14 @@ function Trades() {
           {filtered.length} trade · Gunakan tombol <strong>Ekspor</strong> di atas untuk unduh CSV atau PDF
         </p>
       )}
+      <SharePnlCard
+        open={shareOpen}
+        onOpenChange={setShareOpen}
+        trades={filtered}
+        currency={currency}
+        displayName={profile?.display_name}
+        defaultPeriod={period === "today" ? "today" : period === "week" ? "week" : period === "month" ? "month" : "all"}
+      />
     </div>
   );
 }
