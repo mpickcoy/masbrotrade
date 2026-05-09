@@ -838,7 +838,16 @@ function Dashboard() {
           <h1 className="db-title">
             Halo, <span>{profile?.display_name?.split(" ")[0] ?? profile?.id?.slice(0, 6) ?? "Trader"}</span> 👋
           </h1>
-          <div className="db-date">◷ &nbsp;{today}</div>
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <button
+              onClick={() => setShareOpen(true)}
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-medium text-white/90 backdrop-blur transition hover:bg-white/10"
+              title="Bagikan P/L"
+            >
+              <Share2 className="size-3.5" /> Bagikan
+            </button>
+            <div className="db-date">◷ &nbsp;{today}</div>
+          </div>
         </div>
 
         {/* Stat Cards */}
