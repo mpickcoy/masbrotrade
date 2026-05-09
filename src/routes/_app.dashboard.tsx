@@ -4,6 +4,8 @@ import { useProfile, useTrades, useMovements } from "@/lib/queries";
 import { computeStats, equityCurve } from "@/lib/stats";
 import { fmtMoney } from "@/lib/format";
 import { AiChat } from "@/components/AiChat";
+import { SharePnlCard } from "@/components/SharePnlCard";
+import { Share2 } from "lucide-react";
 
 export const Route = createFileRoute("/_app/dashboard")({ component: Dashboard });
 
