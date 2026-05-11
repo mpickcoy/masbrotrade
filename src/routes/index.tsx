@@ -549,6 +549,21 @@ function Landing() {
         </div>
       </section>
 
+      <section className="border-t border-border/60 bg-card/30 py-14">
+        <div className="mx-auto max-w-3xl px-4 text-center">
+          <p className="text-xs uppercase tracking-[0.2em] text-primary">Mobile App</p>
+          <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl">Segera Hadir di Mobile</h2>
+          <p className="mx-auto mt-3 max-w-xl text-sm text-muted-foreground">
+            Versi Android & iOS sedang dalam pengembangan. Sementara, kamu bisa install langsung
+            sebagai PWA dari browser — buka menu browser lalu pilih "Add to Home Screen".
+          </p>
+          <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <ComingSoonBadge store="apple" />
+            <ComingSoonBadge store="google" />
+          </div>
+        </div>
+      </section>
+
       <footer className="border-t border-border/60 py-8">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 text-xs text-muted-foreground sm:flex-row">
           <p>© {new Date().getFullYear()} TradeJournal · Dibuat untuk trader yang serius</p>
