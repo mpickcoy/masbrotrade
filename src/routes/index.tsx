@@ -618,19 +618,32 @@ type BIPEvent = Event & {
   userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
 };
 
+const PWA_KEY = "tj_pwa_state"; // values: "installed" | "dismissed"
+
 function InstallPwaButton() {
   const [deferred, setDeferred] = useState<BIPEvent | null>(null);
   const [installed, setInstalled] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
   const [showIOSHint, setShowIOSHint] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+
+    try {
+      const saved = localStorage.getItem(PWA_KEY);
+      if (saved === "installed") setInstalled(true);
+      else if (saved === "dismissed") setDismissed(true);
+    } catch {}
+
     const standalone =
       window.matchMedia?.("(display-mode: standalone)").matches ||
       // @ts-expect-error iOS Safari
       window.navigator.standalone === true;
-    if (standalone) setInstalled(true);
+    if (standalone) {
+      setInstalled(true);
+      try { localStorage.setItem(PWA_KEY, "installed"); } catch {}
+    }
 
     const ua = window.navigator.userAgent || "";
     const iOS = /iPad|iPhone|iPod/.test(ua) && !(window as any).MSStream;
@@ -643,6 +656,7 @@ function InstallPwaButton() {
     const onInstalled = () => {
       setInstalled(true);
       setDeferred(null);
+      try { localStorage.setItem(PWA_KEY, "installed"); } catch {}
     };
     window.addEventListener("beforeinstallprompt", onPrompt);
     window.addEventListener("appinstalled", onInstalled);
@@ -658,28 +672,54 @@ function InstallPwaButton() {
     );
   }
 
+  if (dismissed) return null;
+
+  const persist = (v: "installed" | "dismissed") => {
+    try { localStorage.setItem(PWA_KEY, v); } catch {}
+  };
+
   const handleInstall = async () => {
     if (deferred) {
       await deferred.prompt();
       const choice = await deferred.userChoice;
-      if (choice.outcome === "accepted") setInstalled(true);
+      if (choice.outcome === "accepted") {
+        setInstalled(true);
+        persist("installed");
+      } else {
+        setDismissed(true);
+        persist("dismissed");
+      }
       setDeferred(null);
     } else if (isIOS) {
       setShowIOSHint((s) => !s);
     }
   };
 
+  const handleDismiss = () => {
+    setDismissed(true);
+    persist("dismissed");
+  };
+
   if (!deferred && !isIOS) return null;
 
   return (
     <div className="mt-6 flex flex-col items-center gap-2">
-      <button
-        onClick={handleInstall}
-        className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-5 py-2.5 text-sm font-semibold text-primary shadow-[0_0_20px_-6px_hsl(var(--primary)/0.5)] transition hover:bg-primary/20"
-      >
-        <Zap className="size-4" />
-        Install Aplikasi Sekarang
-      </button>
+      <div className="flex items-center gap-2">
+        <button
+          onClick={handleInstall}
+          className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-5 py-2.5 text-sm font-semibold text-primary shadow-[0_0_20px_-6px_hsl(var(--primary)/0.5)] transition hover:bg-primary/20"
+        >
+          <Zap className="size-4" />
+          Install Aplikasi Sekarang
+        </button>
+        <button
+          onClick={handleDismiss}
+          className="rounded-full border border-border/60 px-3 py-2 text-xs text-muted-foreground hover:text-foreground"
+          aria-label="Tutup"
+        >
+          ✕
+        </button>
+      </div>
       {showIOSHint && isIOS && (
         <div className="mt-1 max-w-xs rounded-lg border border-border/60 bg-card/80 p-3 text-xs text-muted-foreground">
           Di Safari iOS: tap tombol <span className="font-semibold">Share</span> ⬆️ lalu pilih{" "}
@@ -689,3 +729,4 @@ function InstallPwaButton() {
     </div>
   );
 }
+
