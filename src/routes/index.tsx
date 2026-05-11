@@ -561,6 +561,7 @@ function Landing() {
             <ComingSoonBadge store="apple" />
             <ComingSoonBadge store="google" />
           </div>
+          <InstallPwaButton />
         </div>
       </section>
 
