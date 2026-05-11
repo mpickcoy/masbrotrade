@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -561,6 +561,7 @@ function Landing() {
             <ComingSoonBadge store="apple" />
             <ComingSoonBadge store="google" />
           </div>
+          <InstallPwaButton />
         </div>
       </section>
 
@@ -608,6 +609,83 @@ function ComingSoonBadge({ store }: { store: "apple" | "google" }) {
       <span className="absolute -right-2 -top-2 rounded-full bg-primary px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-primary-foreground shadow-lg">
         Soon
       </span>
+    </div>
+  );
+}
+
+type BIPEvent = Event & {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
+};
+
+function InstallPwaButton() {
+  const [deferred, setDeferred] = useState<BIPEvent | null>(null);
+  const [installed, setInstalled] = useState(false);
+  const [isIOS, setIsIOS] = useState(false);
+  const [showIOSHint, setShowIOSHint] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const standalone =
+      window.matchMedia?.("(display-mode: standalone)").matches ||
+      // @ts-expect-error iOS Safari
+      window.navigator.standalone === true;
+    if (standalone) setInstalled(true);
+
+    const ua = window.navigator.userAgent || "";
+    const iOS = /iPad|iPhone|iPod/.test(ua) && !(window as any).MSStream;
+    setIsIOS(iOS);
+
+    const onPrompt = (e: Event) => {
+      e.preventDefault();
+      setDeferred(e as BIPEvent);
+    };
+    const onInstalled = () => {
+      setInstalled(true);
+      setDeferred(null);
+    };
+    window.addEventListener("beforeinstallprompt", onPrompt);
+    window.addEventListener("appinstalled", onInstalled);
+    return () => {
+      window.removeEventListener("beforeinstallprompt", onPrompt);
+      window.removeEventListener("appinstalled", onInstalled);
+    };
+  }, []);
+
+  if (installed) {
+    return (
+      <p className="mt-5 text-xs text-primary">✓ Aplikasi sudah terinstall di perangkat ini</p>
+    );
+  }
+
+  const handleInstall = async () => {
+    if (deferred) {
+      await deferred.prompt();
+      const choice = await deferred.userChoice;
+      if (choice.outcome === "accepted") setInstalled(true);
+      setDeferred(null);
+    } else if (isIOS) {
+      setShowIOSHint((s) => !s);
+    }
+  };
+
+  if (!deferred && !isIOS) return null;
+
+  return (
+    <div className="mt-6 flex flex-col items-center gap-2">
+      <button
+        onClick={handleInstall}
+        className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-5 py-2.5 text-sm font-semibold text-primary shadow-[0_0_20px_-6px_hsl(var(--primary)/0.5)] transition hover:bg-primary/20"
+      >
+        <Zap className="size-4" />
+        Install Aplikasi Sekarang
+      </button>
+      {showIOSHint && isIOS && (
+        <div className="mt-1 max-w-xs rounded-lg border border-border/60 bg-card/80 p-3 text-xs text-muted-foreground">
+          Di Safari iOS: tap tombol <span className="font-semibold">Share</span> ⬆️ lalu pilih{" "}
+          <span className="font-semibold text-foreground">"Add to Home Screen"</span>.
+        </div>
+      )}
     </div>
   );
 }
