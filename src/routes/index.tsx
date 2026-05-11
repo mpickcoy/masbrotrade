@@ -549,6 +549,21 @@ function Landing() {
         </div>
       </section>
 
+      <section className="border-t border-border/60 bg-card/30 py-14">
+        <div className="mx-auto max-w-3xl px-4 text-center">
+          <p className="text-xs uppercase tracking-[0.2em] text-primary">Mobile App</p>
+          <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl">Segera Hadir di Mobile</h2>
+          <p className="mx-auto mt-3 max-w-xl text-sm text-muted-foreground">
+            Versi Android & iOS sedang dalam pengembangan. Sementara, kamu bisa install langsung
+            sebagai PWA dari browser — buka menu browser lalu pilih "Add to Home Screen".
+          </p>
+          <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <ComingSoonBadge store="apple" />
+            <ComingSoonBadge store="google" />
+          </div>
+        </div>
+      </section>
+
       <footer className="border-t border-border/60 py-8">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 text-xs text-muted-foreground sm:flex-row">
           <p>© {new Date().getFullYear()} TradeJournal · Dibuat untuk trader yang serius</p>
@@ -558,6 +573,41 @@ function Landing() {
           </nav>
         </div>
       </footer>
+    </div>
+  );
+}
+
+function ComingSoonBadge({ store }: { store: "apple" | "google" }) {
+  const isApple = store === "apple";
+  return (
+    <div
+      className="relative inline-flex h-[54px] w-[178px] cursor-not-allowed items-center gap-3 rounded-xl border border-white/15 bg-black px-4 opacity-80 transition hover:opacity-100"
+      aria-disabled="true"
+      title="Segera hadir"
+    >
+      {isApple ? (
+        <svg viewBox="0 0 24 24" className="h-7 w-7 shrink-0 fill-white" aria-hidden="true">
+          <path d="M16.365 1.43c0 1.14-.42 2.21-1.13 3-.78.86-2.05 1.52-3.1 1.43-.13-1.1.42-2.24 1.1-3.01.77-.87 2.06-1.5 3.13-1.42zM20.5 17.06c-.55 1.27-.81 1.84-1.52 2.96-.99 1.56-2.39 3.5-4.12 3.51-1.54.02-1.94-1-4.04-1-2.1.01-2.54 1.02-4.08 1-1.73-.02-3.05-1.77-4.04-3.33C-.07 16.71-.36 11.6 2.18 8.94c1.46-1.53 3.39-2.42 5.21-2.42 1.86 0 3.03 1.02 4.57 1.02 1.49 0 2.4-1.02 4.55-1.02 1.62 0 3.34.88 4.57 2.4-4.02 2.2-3.36 7.94.42 8.14z"/>
+        </svg>
+      ) : (
+        <svg viewBox="0 0 24 24" className="h-7 w-7 shrink-0" aria-hidden="true">
+          <path fill="#00d4ff" d="M3.6 1.85c-.36.38-.57.97-.57 1.74v16.82c0 .77.21 1.36.57 1.74l.07.06L13.05 12l-9.38-9.21z"/>
+          <path fill="#00ffa3" d="M16.2 15.16 13.05 12l3.15-3.16.08.04 3.72 2.12c1.06.6 1.06 1.6 0 2.2l-3.72 2.12z"/>
+          <path fill="#ff4d6d" d="m16.28 15.2-3.23-3.2-9.45 9.45c.35.37.92.41 1.57.04l11.11-6.29z"/>
+          <path fill="#ffd24d" d="M16.28 8.8 5.17 2.51c-.65-.37-1.22-.33-1.57.04L13.05 12l3.23-3.2z"/>
+        </svg>
+      )}
+      <div className="flex flex-col items-start leading-tight">
+        <span className="text-[9px] uppercase tracking-wide text-white/70">
+          {isApple ? "Download on the" : "Get it on"}
+        </span>
+        <span className="font-display text-base font-semibold text-white">
+          {isApple ? "App Store" : "Google Play"}
+        </span>
+      </div>
+      <span className="absolute -right-2 -top-2 rounded-full bg-primary px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-primary-foreground shadow-lg">
+        Soon
+      </span>
     </div>
   );
 }
