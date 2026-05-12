@@ -1418,6 +1418,7 @@ function Dashboard() {
           <AiChat />
         </div>
 
+      </>)}
       </div>
 
       <SharePnlCard
@@ -1429,7 +1430,6 @@ function Dashboard() {
         defaultPeriod="month"
         initialCapital={Number(profile?.initial_capital ?? 0)}
       />
-    </>)}
     </>
   );
 }
