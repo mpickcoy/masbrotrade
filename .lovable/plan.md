@@ -1,33 +1,34 @@
-## Tambah Section "Download App" di Footer Landing Page
+## Position Size Calculator Widget
 
-Menambah area download aplikasi mobile (Android & iOS) di atas footer landing, dengan badge resmi bergaya **"Coming Soon"** (tanpa link aktif).
+Tambahkan widget kecil di halaman dashboard untuk menghitung ukuran lot berdasarkan modal akun, risk %, dan stop loss (pips).
 
-### Perubahan
-**File:** `src/routes/index.tsx` (hanya satu file)
+### Penempatan
+- File baru: `src/components/PositionSizeCalculator.tsx`
+- Disisipkan di `src/routes/_app.dashboard.tsx` sebagai card di grid dashboard (sejajar dengan card Daily Target / Max Loss), menggunakan kelas `db-card` agar konsisten dengan style yang sudah ada.
 
-1. **Section baru "Download App"** ditempatkan tepat di atas `<footer>` (sebelum line 552).
-   - Heading: "Segera Hadir di Mobile"
-   - Subteks: "Versi Android & iOS sedang dalam pengembangan. Sementara, install via PWA langsung dari browser."
-   - Dua badge resmi (style hitam):
-     - **Get it on Google Play** (logo Play Store + teks)
-     - **Download on the App Store** (logo Apple + teks)
-   - Setiap badge punya overlay ribbon kecil "COMING SOON" di pojok, dan state `disabled` (cursor default, opacity 70%, tidak bisa diklik).
-   - Layout: flex center, gap 12px, responsive (stack di mobile <480px, sejajar di desktop).
+### Input field
+- **Account balance** — prefilled dari `stats.balance` (initial capital + total PnL + capital movements). Bisa diedit manual.
+- **Risk %** — default `1` (input number, step 0.1, range 0.01–100).
+- **Stop loss (pips)** — input number.
+- **Pip value per lot** — input number, default `10` (USD per pip per 1 standard lot, sesuai mayoritas pair USD-quote). User bisa override untuk pair lain (JPY, gold, dll).
+- Currency mengikuti `profile.currency`.
 
-2. **Badge dibuat inline sebagai komponen kecil** dalam file yang sama (`AppStoreBadge`, `GooglePlayBadge`) menggunakan SVG inline agar:
-   - Tidak perlu file asset baru
-   - Crisp di semua resolusi
-   - Konsisten dengan tema (border subtle, hover halus walaupun disabled)
+### Output (live, tanpa tombol submit)
+- **Risk amount** = `balance × risk% / 100` → ditampilkan dalam `fmtMoney`.
+- **Lot size** = `riskAmount / (stopLossPips × pipValuePerLot)` → ditampilkan 2 desimal (standard lots), plus konversi mini lot (×10) dan micro lot (×100) sebagai keterangan kecil.
+- Validasi: jika SL = 0 atau pip value = 0 → tampilkan "—" dan pesan singkat.
+- Highlight risk amount dalam warna accent jika > 2% balance (peringatan over-risk).
 
-3. **Footer existing** (line 552-560) **tidak diubah** — link Privacy & Terms tetap.
+### Behavior
+- Pure client-side, tanpa state ke database (sesuai pilihan user).
+- State lokal via `useState`, tidak disimpan ke localStorage.
+- Format angka pakai helper `fmtMoney` yang sudah ada di project.
 
-### Detail Visual
-- Badge ukuran ~160×52px, background `#000`, border `1px solid rgba(255,255,255,.12)`
-- Ribbon "COMING SOON" warna `--primary` (neon hijau) di pojok kanan-atas
-- Section background subtle: `bg-card/30` dengan border-top tipis untuk pemisah dari section CTA di atasnya
+### Style
+- Reuse class `db-card`, `db-card-title`, `db-card-value` dari `styles.css` agar match dashboard.
+- Layout grid 2 kolom untuk input (responsive: 1 kolom di mobile <640px).
+- Label kecil, input compact.
 
-### Yang TIDAK dilakukan
-- Tidak menambah link aktif ke Play Store / App Store (karena belum ada)
-- Tidak mengubah PWA manifest atau service worker
-- Tidak menambah halaman/route baru
-- Tidak mengubah komponen lain di luar `src/routes/index.tsx`
+### File yang diubah
+- **Buat**: `src/components/PositionSizeCalculator.tsx`
+- **Edit**: `src/routes/_app.dashboard.tsx` — import + render widget di dalam grid card yang sudah ada (kemungkinan dekat card Max Loss Limit agar tema "risk management" berkumpul).

@@ -3,6 +3,7 @@ import { useMemo, useState, useRef, useEffect } from "react";
 import { useProfile, useTrades, useMovements, useUpdateProfile } from "@/lib/queries";
 import { computeStats, equityCurve } from "@/lib/stats";
 import { fmtMoney } from "@/lib/format";
+import { PositionSizeCalculator } from "@/components/PositionSizeCalculator";
 import { AiChat } from "@/components/AiChat";
 import { SharePnlCard } from "@/components/SharePnlCard";
 import { Share2 } from "lucide-react";
@@ -1238,6 +1239,9 @@ function Dashboard() {
             </>
           )}
         </div>
+
+        {/* ── Position Size Calculator ── */}
+        <PositionSizeCalculator balance={stats.balance} currency={currency} />
 
         {/* ── R:R Ratio + Win/Loss Pie ── */}
         <div className="db-rr-pie-row">
