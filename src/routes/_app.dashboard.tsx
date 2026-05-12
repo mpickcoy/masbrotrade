@@ -1239,6 +1239,9 @@ function Dashboard() {
           )}
         </div>
 
+        {/* ── Position Size Calculator ── */}
+        <PositionSizeCalculator balance={stats.balance} currency={currency} />
+
         {/* ── R:R Ratio + Win/Loss Pie ── */}
         <div className="db-rr-pie-row">
 
