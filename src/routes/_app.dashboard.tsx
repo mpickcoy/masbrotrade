@@ -146,10 +146,10 @@ function Dashboard() {
   const todayQuote = QUOTES[new Date().getDate() % QUOTES.length];
 
   const MOODS = [
-    { emoji: "😴", label: "Lelah", value: "tired" },
-    { emoji: "😊", label: "Fokus", value: "focus" },
-    { emoji: "😤", label: "Emosi", value: "emotional" },
-    { emoji: "🧘", label: "Tenang", value: "calm" },
+    { emoji: "ðŸ˜´", label: "Lelah", value: "tired" },
+    { emoji: "ðŸ˜Š", label: "Fokus", value: "focus" },
+    { emoji: "ðŸ˜¤", label: "Emosi", value: "emotional" },
+    { emoji: "ðŸ§˜", label: "Tenang", value: "calm" },
   ];
   const saveMood = (v: string) => {
     setMood(v);
@@ -164,9 +164,9 @@ function Dashboard() {
     const utcM = nowUTC.getUTCMinutes();
     const utcMin = utcH * 60 + utcM;
     const sessions = [
-      { name: "Asia", start: 0 * 60, end: 9 * 60, color: "#5ee7df", emoji: "🌏" },
-      { name: "London", start: 8 * 60, end: 17 * 60, color: "#b490f5", emoji: "🏛️" },
-      { name: "New York", start: 13 * 60, end: 22 * 60, color: "#a8f08a", emoji: "🗽" },
+      { name: "Asia", start: 0 * 60, end: 9 * 60, color: "#5ee7df", emoji: "ðŸŒ" },
+      { name: "London", start: 8 * 60, end: 17 * 60, color: "#b490f5", emoji: "ðŸ›ï¸" },
+      { name: "New York", start: 13 * 60, end: 22 * 60, color: "#a8f08a", emoji: "ðŸ—½" },
     ];
     return sessions.map((s) => {
       const active = utcMin >= s.start && utcMin < s.end;
@@ -261,9 +261,9 @@ function Dashboard() {
   const css = `
     @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap');
 
-    /* ════════════════════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        LIQUID GLASS DESIGN TOKENS
-    ════════════════════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     :root {
       --glass-white:         rgba(255,255,255,0.10);
       --glass-white-md:      rgba(255,255,255,0.18);
@@ -296,9 +296,9 @@ function Dashboard() {
       --c-subtle:  rgba(255,255,255,0.30);
     }
 
-    /* ════════════════════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        ANIMATED BACKGROUND BLOBS
-    ════════════════════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .lg-scene {
       position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none;
     }
@@ -316,9 +316,9 @@ function Dashboard() {
       100% { transform:translate(28px,28px) scale(1.03); }
     }
 
-    /* ════════════════════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        BASE GLASS UTILITY
-    ════════════════════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .glass {
       backdrop-filter: var(--blur-md);
       -webkit-backdrop-filter: var(--blur-md);
@@ -344,9 +344,9 @@ function Dashboard() {
       border-color: rgba(255,255,255,0.15);
     }
 
-    /* ════════════════════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        KEYFRAMES
-    ════════════════════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     @keyframes lg-cardIn {
       from { opacity:0; transform:translateY(20px) scale(0.97); filter:blur(6px); }
       to   { opacity:1; transform:translateY(0) scale(1); filter:blur(0); }
@@ -379,30 +379,34 @@ function Dashboard() {
       0%,100% { opacity:1; } 50% { opacity:0.25; }
     }
 
-    /* ════════════════════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        LAYOUT WRAPPER
-    ════════════════════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     *, *::before, *::after { box-sizing:border-box; }
+
+    /* CRITICAL: prevent all horizontal overflow */
+    html, body { overflow-x:hidden; max-width:100vw; }
     .lg-wrap {
       position:relative; z-index:10;
-      padding:24px 20px 120px;
-      width:100%; max-width:100%; overflow-x:hidden;
+      padding:16px 14px 120px;
+      width:100%; max-width:100vw; overflow-x:hidden;
       font-family:'DM Mono',monospace;
       color: var(--c-text);
       box-sizing:border-box;
     }
 
-    /* ════════════════════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        TOPBAR
-    ════════════════════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .lg-topbar {
       display:flex; align-items:center; justify-content:space-between;
-      margin-bottom:20px; gap:8px; min-width:0;
+      margin-bottom:16px; gap:8px; min-width:0; overflow:hidden;
     }
     .lg-title {
       font-family:'Syne',sans-serif; font-weight:800;
-      font-size:1.5rem; letter-spacing:-.5px; color:#fff;
-      min-width:0; flex:1;
+      font-size:1.2rem; letter-spacing:-.5px; color:#fff;
+      flex:1; min-width:0; overflow:hidden;
+      white-space:nowrap; text-overflow:ellipsis;
     }
     .lg-title span {
       background:linear-gradient(135deg,var(--c-profit),var(--c-violet));
@@ -423,19 +427,20 @@ function Dashboard() {
       color:#fff;
     }
     .lg-share-btn:hover { transform:translateY(-2px); box-shadow:var(--shadow-float); }
-    .lg-topbar-right { display:flex; align-items:center; gap:10px; flex-shrink:0; }
+    .lg-topbar-right { display:flex; align-items:center; gap:8px; flex-shrink:0; }
 
-    /* ════════════════════════════════════════════════
-       STAT CARDS — 4 columns
-    ════════════════════════════════════════════════ */
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       STAT CARDS â€” 4 columns
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .lg-cards {
-      display:grid; grid-template-columns:repeat(4,1fr);
-      gap:14px; margin-bottom:20px;
-      width:100%;
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px; margin-bottom:16px;
+      width:100%; max-width:100%;
     }
     .lg-card {
-      border-radius:22px; padding:22px 20px;
-      min-width:0; overflow:hidden;
+      border-radius:18px; padding:14px 14px;
+      min-width:0; overflow:hidden; width:100%;
       animation:lg-cardIn var(--dur-slow) var(--ease-glass) both;
       cursor:pointer;
       transition:transform var(--dur-mid) var(--ease-liquid), box-shadow var(--dur-mid);
@@ -492,9 +497,10 @@ function Dashboard() {
 
     .lg-card-value {
       font-family:'Syne',sans-serif; font-weight:800;
-      font-size:1.6rem; letter-spacing:-1px; line-height:1;
-      color:#fff; margin-bottom:8px; position:relative; z-index:1;
-      word-break:break-all; overflow-wrap:anywhere;
+      font-size:1.25rem; letter-spacing:-0.5px; line-height:1.1;
+      color:#fff; margin-bottom:6px; position:relative; z-index:1;
+      overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+      max-width:100%;
     }
     .lg-card-sub {
       font-size:.62rem; color:var(--c-muted);
@@ -504,9 +510,9 @@ function Dashboard() {
     .lg-up   { color:var(--c-profit); }
     .lg-down { color:var(--c-loss); }
 
-    /* ════════════════════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        REMINDER BANNER
-    ════════════════════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .lg-reminder {
       border-radius:16px; padding:13px 18px; margin-bottom:16px;
       display:flex; align-items:center; justify-content:space-between; gap:12px;
@@ -525,16 +531,17 @@ function Dashboard() {
     }
     .lg-reminder-btn:hover { transform:translateY(-2px); }
 
-    /* ════════════════════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        MOOD CHECK-IN
-    ════════════════════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .lg-mood-card {
-      border-radius:20px; padding:16px 20px; margin-bottom:16px;
-      display:flex; align-items:center; gap:16px;
+      border-radius:16px; padding:12px 14px; margin-bottom:12px;
+      display:flex; align-items:center; gap:10px;
+      overflow:hidden; min-width:0; width:100%;
       animation:lg-cardIn var(--dur-slow) var(--ease-glass) .08s both;
     }
     .lg-mood-label { font-size:.70rem; color:var(--c-muted); white-space:nowrap; }
-    .lg-mood-opts { display:flex; gap:8px; flex:1; }
+    .lg-mood-opts { display:flex; gap:6px; flex:1; min-width:0; overflow:hidden; }
     .lg-mood-btn {
       flex:1; display:flex; flex-direction:column; align-items:center; gap:4px;
       padding:10px 6px; border-radius:14px; cursor:pointer;
@@ -558,11 +565,12 @@ function Dashboard() {
     .lg-mood-emoji { font-size:1.3rem; position:relative; z-index:2; }
     .lg-mood-warn { font-size:.63rem; color:var(--c-muted); white-space:nowrap; }
 
-    /* ════════════════════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        TARGET HARIAN
-    ════════════════════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .lg-target-card {
-      border-radius:20px; padding:20px 22px; margin-bottom:16px;
+      border-radius:16px; padding:14px 14px; margin-bottom:12px;
+      overflow:hidden; min-width:0; width:100%;
       animation:lg-cardIn var(--dur-slow) var(--ease-glass) .10s both;
     }
     .lg-target-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
@@ -607,10 +615,10 @@ function Dashboard() {
       animation:lg-cardIn var(--dur-mid) ease both;
     }
 
-    /* ════════════════════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        STREAK + DAILY BARS ROW
-    ════════════════════════════════════════════════ */
-    .lg-extra-row { display:grid; grid-template-columns:200px 1fr; gap:14px; margin-bottom:16px; }
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    .lg-extra-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px; width:100%; }
     .lg-extra-row > * { min-width:0; }
 
     .lg-streak-card {
@@ -646,9 +654,9 @@ function Dashboard() {
     .lg-bar-day  { font-size:.58rem; color:var(--c-subtle); white-space:nowrap; }
     .lg-bar-day.today { color:var(--c-profit); }
 
-    /* ════════════════════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        TOP PAIRS + QUOTE
-    ════════════════════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .lg-pairs-quote-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px; }
     .lg-pairs-quote-row > * { min-width:0; }
 
@@ -672,9 +680,9 @@ function Dashboard() {
     .lg-quote-text   { font-size:.78rem; line-height:1.65; color:rgba(255,255,255,0.80); font-style:italic; flex:1; }
     .lg-quote-author { font-size:.62rem; color:var(--c-violet); margin-top:12px; }
 
-    /* ════════════════════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        TRADING SESSIONS
-    ════════════════════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .lg-sesi-row { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:16px; }
     .lg-sesi-card {
       border-radius:18px; padding:16px;
@@ -696,9 +704,9 @@ function Dashboard() {
     .lg-sesi-time { font-size:.60rem; color:var(--c-muted); }
     .lg-sesi-timeleft { font-size:.60rem; color:var(--c-profit); }
 
-    /* ════════════════════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        MAX LOSS HARIAN
-    ════════════════════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .lg-maxloss-card {
       border-radius:20px; padding:20px 22px; margin-bottom:16px;
       transition:border-color var(--dur-mid), box-shadow var(--dur-mid);
@@ -741,9 +749,9 @@ function Dashboard() {
     }
     .lg-maxloss-save:hover { transform:translateY(-2px); }
 
-    /* ════════════════════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        RR + PIE ROW
-    ════════════════════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .lg-rr-pie-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px; }
     .lg-rr-pie-row > * { min-width:0; }
 
@@ -764,9 +772,9 @@ function Dashboard() {
     .lg-pie-lname { color:var(--c-muted); flex:1; }
     .lg-pie-lpct  { font-weight:500; color:#fff; }
 
-    /* ════════════════════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        AI BAR (desktop)
-    ════════════════════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .lg-ai-bar {
       border-radius:18px; padding:14px 18px; margin-bottom:18px;
       display:flex; align-items:center; gap:12px;
@@ -804,9 +812,9 @@ function Dashboard() {
     }
     .lg-ai-send:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(94,231,223,0.38); }
 
-    /* ════════════════════════════════════════════════
-       BOTTOM GRID — equity curve + trade feed
-    ════════════════════════════════════════════════ */
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       BOTTOM GRID â€” equity curve + trade feed
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .lg-bottom-grid { display:grid; grid-template-columns:1fr 360px; gap:14px; }
 
     .lg-chart-card {
@@ -864,9 +872,9 @@ function Dashboard() {
     .lg-trade-pnl.pos { color:var(--c-profit); }
     .lg-trade-pnl.neg { color:var(--c-loss); }
 
-    /* ════════════════════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        LOADING SKELETONS
-    ════════════════════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .lg-skel {
       border-radius:var(--r, 10px); background:rgba(255,255,255,0.07);
       position:relative; overflow:hidden;
@@ -878,32 +886,39 @@ function Dashboard() {
       animation:lg-shimmer 1.8s linear infinite;
     }
 
-    /* ════════════════════════════════════════════════
-       RESPONSIVE — TABLET ≤ 1024px
-    ════════════════════════════════════════════════ */
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       RESPONSIVE â€” TABLET â‰¤ 1024px
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    @media (min-width:900px) {
+      .lg-wrap  { padding:24px 28px 120px; }
+      .lg-cards { grid-template-columns:repeat(4,1fr); gap:14px; }
+      .lg-card  { padding:22px 20px; border-radius:22px; }
+      .lg-card-value { font-size:1.72rem; white-space:normal; }
+      .lg-title { font-size:1.5rem; }
+    }
     @media (max-width:1024px) {
-      .lg-wrap            { padding:20px 16px; overflow-x:hidden; }
-      .lg-cards           { grid-template-columns:repeat(2,1fr); gap:12px; width:100%; }
-      .lg-extra-row       { grid-template-columns:1fr 1fr; width:100%; }
+      .lg-wrap            { padding:14px 14px 120px; overflow-x:hidden; }
+      .lg-cards           { grid-template-columns:repeat(2,1fr); gap:10px; }
+      .lg-extra-row       { grid-template-columns:1fr 1fr; }
       .lg-pairs-quote-row { grid-template-columns:1fr; }
       .lg-rr-pie-row      { grid-template-columns:1fr; }
       .lg-bottom-grid     { grid-template-columns:1fr; }
     }
 
-    /* ════════════════════════════════════════════════
-       RESPONSIVE — MOBILE ≤ 640px
-    ════════════════════════════════════════════════ */
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       RESPONSIVE â€” MOBILE â‰¤ 640px
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     @media (max-width:640px) {
-      .lg-wrap    { padding:12px 12px 120px; overflow-x:hidden; }
-      .lg-topbar  { margin-bottom:12px; flex-wrap:wrap; gap:8px; }
+      .lg-wrap    { padding:10px 10px 120px; max-width:100vw; overflow-x:hidden; }
+      .lg-topbar  { margin-bottom:10px; }
       .lg-title   { font-size:.95rem; }
       .lg-date-pill { display:none; }
 
       .lg-cards { grid-template-columns:repeat(2,1fr); gap:8px; margin-bottom:10px; width:100%; }
-      .lg-card  { padding:14px 12px; border-radius:16px; min-width:0; }
-      .lg-card-label { font-size:.54rem; gap:4px; margin-bottom:6px; }
-      .lg-card-value { font-size:1.1rem; margin-bottom:5px; letter-spacing:-.5px; }
-      .lg-card-sub   { font-size:.56rem; }
+      .lg-card  { padding:12px 10px; border-radius:14px; min-width:0; overflow:hidden; }
+      .lg-card-label { font-size:.52rem; gap:4px; margin-bottom:5px; }
+      .lg-card-value { font-size:1.1rem; margin-bottom:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+      .lg-card-sub   { font-size:.54rem; }
 
       .lg-ai-bar { display:none; }
 
@@ -933,12 +948,10 @@ function Dashboard() {
 
       .lg-sesi-row {
         display:flex; gap:8px; overflow-x:auto; margin-bottom:10px;
-        padding-bottom:8px; scroll-snap-type:x mandatory;
-        -webkit-overflow-scrolling:touch; width:100%;
-        scrollbar-width:none;
+        padding-bottom:4px; scroll-snap-type:x mandatory;
+        -webkit-overflow-scrolling:touch;
       }
-      .lg-sesi-row::-webkit-scrollbar { display:none; }
-      .lg-sesi-card { flex:0 0 calc(50% - 4px); scroll-snap-align:start; padding:11px 12px; border-radius:14px; min-width:150px; }
+      .lg-sesi-card { flex:0 0 48%; scroll-snap-align:start; padding:11px 12px; border-radius:14px; }
 
       .lg-maxloss-card { padding:13px 12px; margin-bottom:10px; border-radius:16px; }
       .lg-rr-pie-row   { grid-template-columns:1fr; gap:8px; margin-bottom:10px; }
@@ -952,13 +965,10 @@ function Dashboard() {
     }
 
     @media (max-width:390px) {
-      .lg-wrap      { padding:8px 8px 120px; }
-      .lg-card-value { font-size:.95rem; letter-spacing:-.5px; }
-      .lg-card       { padding:12px 10px; }
+      .lg-wrap      { padding:10px 10px 110px; }
+      .lg-card-value { font-size:1rem; }
       .lg-streak-val { font-size:1.6rem; }
       .lg-sesi-card  { flex:0 0 56%; }
-      .lg-topbar-right { gap:6px; }
-      .lg-share-btn { padding:7px 12px; font-size:.66rem; }
     }
   `;
 
@@ -975,10 +985,10 @@ function Dashboard() {
 
       <div className="lg-wrap">
 
-        {/* ── Loading skeleton ── */}
+        {/* â”€â”€ Loading skeleton â”€â”€ */}
         {isLoading && (
           <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
-            <div style={{ display:"grid", gridTemplateColumns:"repeat(2,minmax(0,1fr))", gap:10, marginBottom:16, width:"100%" }}>
+            <div style={{ display:"grid", gridTemplateColumns:"repeat(2,1fr)", gap:10, marginBottom:14, width:"100%" }}>
               {[...Array(4)].map((_, i) => (
                 <div key={i} className="glass glass--frosted lg-skel" style={{ borderRadius:22, padding:"22px 20px", animationDelay:`${i*.08}s`, "--r":"22px" } as any}>
                   <div className="lg-skel" style={{ height:10, width:"50%", borderRadius:6, marginBottom:14 }} />
@@ -991,14 +1001,14 @@ function Dashboard() {
           </div>
         )}
 
-        {/* ── Error state ── */}
+        {/* â”€â”€ Error state â”€â”€ */}
         {!isLoading && isError && (
           <div className="glass glass--frosted" style={{
             borderRadius:18, padding:"24px 20px", marginBottom:20,
             borderColor:"rgba(248,113,113,0.30)",
             display:"flex", alignItems:"center", gap:14,
           }}>
-            <span style={{ fontSize:"1.8rem" }}>⚠️</span>
+            <span style={{ fontSize:"1.8rem" }}>âš ï¸</span>
             <div>
               <div style={{ fontFamily:"'Syne',sans-serif", fontWeight:700, marginBottom:4, color:"#fff" }}>Gagal memuat data</div>
               <div style={{ fontSize:".76rem", color:"rgba(248,113,113,0.80)" }}>Periksa koneksi internet Anda, lalu refresh halaman.</div>
@@ -1006,33 +1016,33 @@ function Dashboard() {
             <button type="button" onClick={() => window.location.reload()}
               className="glass glass--frosted"
               style={{ marginLeft:"auto", borderRadius:10, padding:"8px 18px", color:"#f87171", fontWeight:700, fontSize:".75rem", cursor:"pointer", whiteSpace:"nowrap", borderColor:"rgba(248,113,113,0.30)" }}>
-              Refresh ↺
+              Refresh â†º
             </button>
           </div>
         )}
 
         {!isLoading && !isError && (<>
 
-        {/* ─── TOPBAR ─── */}
+        {/* â”€â”€â”€ TOPBAR â”€â”€â”€ */}
         <div className="lg-topbar">
           <h1 className="lg-title">
-            Halo, <span>{profile?.display_name?.split(" ")[0] ?? profile?.id?.slice(0, 6) ?? "Trader"}</span> 👋
+            Halo, <span>{profile?.display_name?.split(" ")[0] ?? profile?.id?.slice(0, 6) ?? "Trader"}</span> ðŸ‘‹
           </h1>
           <div className="lg-topbar-right">
             <button onClick={() => setShareOpen(true)} className="glass glass--frosted lg-share-btn" type="button">
               <Share2 size={13} /> Bagikan
             </button>
-            <div className="glass glass--frosted lg-date-pill">◷ &nbsp;{today}</div>
+            <div className="glass glass--frosted lg-date-pill">â—· &nbsp;{today}</div>
           </div>
         </div>
 
-        {/* ─── STAT CARDS ─── */}
+        {/* â”€â”€â”€ STAT CARDS â”€â”€â”€ */}
         <div className="lg-cards">
           {[
-            { cls:"profit",  label:"Profit Bulan Ini", value:fmtMoney(stats.monthly,currency), sub: stats.monthly>=0?"▲ bulan ini":"▼ bulan ini", up:stats.monthly>=0 },
-            { cls:"winrate", label:"Win Rate",         value:`${stats.winRate.toFixed(1)}%`,   sub:`▲ ${stats.tradeCount} trade`, up:true },
-            { cls:"trades",  label:"Total Trade",      value:`${stats.tradeCount}`,             sub:"▲ semua waktu", up:true },
-            { cls:"balance", label:"Saldo Akun",       value:fmtMoney(stats.balance,currency),  sub:`${stats.daily>=0?"▲":"▼"} ${fmtMoney(Math.abs(stats.daily),currency)} hari ini`, up:stats.daily>=0 },
+            { cls:"profit",  label:"Profit Bulan Ini", value:fmtMoney(stats.monthly,currency), sub: stats.monthly>=0?"â–² bulan ini":"â–¼ bulan ini", up:stats.monthly>=0 },
+            { cls:"winrate", label:"Win Rate",         value:`${stats.winRate.toFixed(1)}%`,   sub:`â–² ${stats.tradeCount} trade`, up:true },
+            { cls:"trades",  label:"Total Trade",      value:`${stats.tradeCount}`,             sub:"â–² semua waktu", up:true },
+            { cls:"balance", label:"Saldo Akun",       value:fmtMoney(stats.balance,currency),  sub:`${stats.daily>=0?"â–²":"â–¼"} ${fmtMoney(Math.abs(stats.daily),currency)} hari ini`, up:stats.daily>=0 },
           ].map((c) => (
             <div key={c.cls} className={`glass glass--frosted lg-card lg-card--${c.cls}`}>
               <div className="lg-card-orb" />
@@ -1043,17 +1053,17 @@ function Dashboard() {
           ))}
         </div>
 
-        {/* ─── REMINDER ─── */}
+        {/* â”€â”€â”€ REMINDER â”€â”€â”€ */}
         {showReminder && (
           <div className="lg-reminder">
-            <div className="lg-reminder-text"><span>⚡</span><span>Belum ada trade hari ini — sudah trading?</span></div>
+            <div className="lg-reminder-text"><span>âš¡</span><span>Belum ada trade hari ini â€” sudah trading?</span></div>
             <button className="glass glass--frosted lg-reminder-btn" type="button" onClick={() => navigate({ to:"/chat" })}>
-              Catat Sekarang ↗
+              Catat Sekarang â†—
             </button>
           </div>
         )}
 
-        {/* ─── MOOD CHECK-IN ─── */}
+        {/* â”€â”€â”€ MOOD CHECK-IN â”€â”€â”€ */}
         <div className="glass glass--frosted lg-mood-card">
           <div className="lg-mood-label">Kondisi hari ini:</div>
           <div className="lg-mood-opts">
@@ -1066,15 +1076,15 @@ function Dashboard() {
           </div>
           {mood && (
             <div className="lg-mood-warn">
-              {mood==="emotional"?"⚠️ Hati-hati saat emosi":mood==="tired"?"😴 Pertimbangkan reduce lot":mood==="focus"?"✅ Kondisi ideal!":"🧘 Good mindset"}
+              {mood==="emotional"?"âš ï¸ Hati-hati saat emosi":mood==="tired"?"ðŸ˜´ Pertimbangkan reduce lot":mood==="focus"?"âœ… Kondisi ideal!":"ðŸ§˜ Good mindset"}
             </div>
           )}
         </div>
 
-        {/* ─── TARGET HARIAN ─── */}
+        {/* â”€â”€â”€ TARGET HARIAN â”€â”€â”€ */}
         <div className="glass glass--frosted lg-target-card">
           <div className="lg-target-header">
-            <div className="lg-target-title">🎯 Target Harian</div>
+            <div className="lg-target-title">ðŸŽ¯ Target Harian</div>
             {dailyTarget>0 && !editTarget && (
               <button className="lg-target-edit" type="button" onClick={()=>setEditTarget(true)}>Ubah target</button>
             )}
@@ -1091,7 +1101,7 @@ function Dashboard() {
               <div className="lg-target-vals">
                 <span>{fmtMoney(Math.max(stats.daily,0),currency)} <span style={{color:"var(--c-subtle)"}}>/ {fmtMoney(dailyTarget,currency)}</span></span>
                 {targetReached
-                  ? <span className="lg-reached-badge">✓ Target Tercapai 🎉</span>
+                  ? <span className="lg-reached-badge">âœ“ Target Tercapai ðŸŽ‰</span>
                   : <span style={{color:stats.daily<0?"var(--c-loss)":"var(--c-muted)"}}>{targetProgress.toFixed(0)}%</span>
                 }
               </div>
@@ -1105,13 +1115,13 @@ function Dashboard() {
           )}
         </div>
 
-        {/* ─── STREAK + DAILY BARS ─── */}
+        {/* â”€â”€â”€ STREAK + DAILY BARS â”€â”€â”€ */}
         <div className="lg-extra-row">
           <div className="glass glass--frosted lg-streak-card">
             <div className="lg-streak-label"><span className="lg-streak-dot" />Profit Streak</div>
             <div style={{display:"flex",alignItems:"baseline",gap:8,margin:"10px 0 6px",position:"relative",zIndex:1}}>
               <div className="lg-streak-val">{streak}</div>
-              <div className="lg-streak-fire">{streak>=5?"🔥":streak>=3?"⚡":streak>=1?"✨":"💤"}</div>
+              <div className="lg-streak-fire">{streak>=5?"ðŸ”¥":streak>=3?"âš¡":streak>=1?"âœ¨":"ðŸ’¤"}</div>
             </div>
             <div className="lg-streak-sub">{streak===0?"Mulai streak hari ini!":streak===1?"1 hari berturut-turut":`${streak} hari berturut-turut`}</div>
           </div>
@@ -1141,15 +1151,15 @@ function Dashboard() {
           </div>
         </div>
 
-        {/* ─── TOP 3 PAIRS + QUOTE ─── */}
+        {/* â”€â”€â”€ TOP 3 PAIRS + QUOTE â”€â”€â”€ */}
         <div className="lg-pairs-quote-row">
           <div className="glass glass--frosted lg-pairs-card">
-            <div className="lg-pairs-title">🏆 Top 3 Pair Terbaik</div>
+            <div className="lg-pairs-title">ðŸ† Top 3 Pair Terbaik</div>
             {topPairs.length===0
               ? <div style={{fontSize:".75rem",color:"var(--c-muted)"}}>Belum ada data trade.</div>
               : topPairs.map((p,i)=>(
                 <div key={p.pair} className="lg-pair-row">
-                  <div className="lg-pair-rank">{i===0?"🥇":i===1?"🥈":"🥉"}</div>
+                  <div className="lg-pair-rank">{i===0?"ðŸ¥‡":i===1?"ðŸ¥ˆ":"ðŸ¥‰"}</div>
                   <div className="lg-pair-name">{p.pair}</div>
                   <div className="lg-pair-wr">{p.wr}% WR</div>
                   <div className={`lg-pair-pnl ${p.pnl>=0?"lg-up":"lg-down"}`}>
@@ -1160,13 +1170,13 @@ function Dashboard() {
             }
           </div>
           <div className="glass glass--frosted lg-quote-card">
-            <div className="lg-quote-icon">💬</div>
+            <div className="lg-quote-icon">ðŸ’¬</div>
             <div className="lg-quote-text">"{todayQuote.text}"</div>
-            <div className="lg-quote-author">— {todayQuote.author}</div>
+            <div className="lg-quote-author">â€” {todayQuote.author}</div>
           </div>
         </div>
 
-        {/* ─── SESI TRADING ─── */}
+        {/* â”€â”€â”€ SESI TRADING â”€â”€â”€ */}
         <div className="lg-sesi-row">
           {tradingSessions.map((s)=>(
             <div key={s.name} className={`glass glass--frosted lg-sesi-card${s.active?" active":""}`}
@@ -1180,26 +1190,26 @@ function Dashboard() {
                 <span className={`lg-sesi-badge ${s.active?"live":"closed"}`}>{s.active?"LIVE":"Tutup"}</span>
               </div>
               <div className="lg-sesi-time" style={{color:s.active?s.color:"var(--c-muted)"}}>
-                {s.name==="Asia"?"00:00 – 09:00 UTC":s.name==="London"?"08:00 – 17:00 UTC":"13:00 – 22:00 UTC"}
+                {s.name==="Asia"?"00:00 â€“ 09:00 UTC":s.name==="London"?"08:00 â€“ 17:00 UTC":"13:00 â€“ 22:00 UTC"}
               </div>
               {s.active&&s.minLeft!==null&&(
-                <div className="lg-sesi-timeleft" style={{color:s.color}}>⏱ Tutup dalam {Math.floor(s.minLeft/60)}j {s.minLeft%60}m</div>
+                <div className="lg-sesi-timeleft" style={{color:s.color}}>â± Tutup dalam {Math.floor(s.minLeft/60)}j {s.minLeft%60}m</div>
               )}
             </div>
           ))}
         </div>
 
-        {/* ─── MAX LOSS HARIAN ─── */}
+        {/* â”€â”€â”€ MAX LOSS HARIAN â”€â”€â”€ */}
         <div className={`glass glass--frosted lg-maxloss-card${maxLossHit?" hit":""}`}>
           <div className="lg-maxloss-header">
-            <div className="lg-maxloss-title">🛑 Batas Loss Harian</div>
+            <div className="lg-maxloss-title">ðŸ›‘ Batas Loss Harian</div>
             {maxLossLimit>0&&!editMaxLoss&&(
               <button className="lg-maxloss-edit" type="button" onClick={()=>setEditMaxLoss(true)}>Ubah batas</button>
             )}
           </div>
           {maxLossHit&&(
             <div className="lg-maxloss-alert">
-              <span>🚨</span><span><strong>Stop trading hari ini!</strong> Batas loss harian sudah tercapai.</span>
+              <span>ðŸš¨</span><span><strong>Stop trading hari ini!</strong> Batas loss harian sudah tercapai.</span>
             </div>
           )}
           {(maxLossLimit===0||editMaxLoss) ? (
@@ -1227,19 +1237,19 @@ function Dashboard() {
           )}
         </div>
 
-        {/* ─── POSITION SIZE CALCULATOR ─── */}
+        {/* â”€â”€â”€ POSITION SIZE CALCULATOR â”€â”€â”€ */}
         <PositionSizeCalculator balance={stats.balance} currency={currency} />
 
-        {/* ─── R:R + WIN/LOSS PIE ─── */}
+        {/* â”€â”€â”€ R:R + WIN/LOSS PIE â”€â”€â”€ */}
         <div className="lg-rr-pie-row">
           <div className="glass glass--frosted lg-rr-card">
-            <div className="lg-rr-title">⚖️ Risk / Reward Ratio</div>
+            <div className="lg-rr-title">âš–ï¸ Risk / Reward Ratio</div>
             <div className="lg-rr-grid">
               {[
-                { lbl:"Avg R:R",       val:trades.length?`1 : ${rrData.rr.toFixed(2)}`:"–", color:rrData.rr>=1.5?"var(--c-profit)":rrData.rr>=1?"var(--c-amber)":"var(--c-loss)", sub:rrData.rr>=1.5?"✓ Excellent":rrData.rr>=1?"~ OK":"↓ Perlu diperbaiki" },
-                { lbl:"Profit Factor", val:trades.length?rrData.profitFactor.toFixed(2):"–", color:rrData.profitFactor>=1.5?"var(--c-profit)":rrData.profitFactor>=1?"var(--c-amber)":"var(--c-loss)", sub:"≥ 1.5 bagus" },
-                { lbl:"Avg Win",       val:trades.length?fmtMoney(rrData.avgWin,currency):"–", color:"var(--c-profit)", sub:"" },
-                { lbl:"Avg Loss",      val:trades.length?fmtMoney(rrData.avgLoss,currency):"–", color:"var(--c-loss)", sub:"" },
+                { lbl:"Avg R:R",       val:trades.length?`1 : ${rrData.rr.toFixed(2)}`:"â€“", color:rrData.rr>=1.5?"var(--c-profit)":rrData.rr>=1?"var(--c-amber)":"var(--c-loss)", sub:rrData.rr>=1.5?"âœ“ Excellent":rrData.rr>=1?"~ OK":"â†“ Perlu diperbaiki" },
+                { lbl:"Profit Factor", val:trades.length?rrData.profitFactor.toFixed(2):"â€“", color:rrData.profitFactor>=1.5?"var(--c-profit)":rrData.profitFactor>=1?"var(--c-amber)":"var(--c-loss)", sub:"â‰¥ 1.5 bagus" },
+                { lbl:"Avg Win",       val:trades.length?fmtMoney(rrData.avgWin,currency):"â€“", color:"var(--c-profit)", sub:"" },
+                { lbl:"Avg Loss",      val:trades.length?fmtMoney(rrData.avgLoss,currency):"â€“", color:"var(--c-loss)", sub:"" },
               ].map((r)=>(
                 <div key={r.lbl} className="lg-rr-item">
                   <div className="lg-rr-lbl">{r.lbl}</div>
@@ -1250,7 +1260,7 @@ function Dashboard() {
             </div>
           </div>
           <div className="glass glass--frosted lg-pie-card">
-            <div className="lg-pie-title">📊 Win / Loss / BE</div>
+            <div className="lg-pie-title">ðŸ“Š Win / Loss / BE</div>
             {trades.length===0
               ? <div style={{fontSize:".75rem",color:"var(--c-muted)",flex:1,display:"flex",alignItems:"center"}}>Belum ada data trade.</div>
               : (
@@ -1288,17 +1298,17 @@ function Dashboard() {
           </div>
         </div>
 
-        {/* ─── AI BAR (desktop) ─── */}
+        {/* â”€â”€â”€ AI BAR (desktop) â”€â”€â”€ */}
         <div className="glass glass--frosted lg-ai-bar">
           <div className="lg-ai-indicator">AI</div>
           <input className="lg-ai-input" type="text" value={aiInput}
             onChange={(e)=>setAiInput(e.target.value)}
             onKeyDown={(e)=>e.key==="Enter"&&handleAiSend()}
-            placeholder="Ketik trade kamu… cth: Long BTC entry 65000 exit 66000 lot 0.1" />
-          <button className="lg-ai-send" type="button" onClick={handleAiSend}>CATAT ↗</button>
+            placeholder="Ketik trade kamuâ€¦ cth: Long BTC entry 65000 exit 66000 lot 0.1" />
+          <button className="lg-ai-send" type="button" onClick={handleAiSend}>CATAT â†—</button>
         </div>
 
-        {/* ─── BOTTOM GRID — equity curve + trade feed ─── */}
+        {/* â”€â”€â”€ BOTTOM GRID â€” equity curve + trade feed â”€â”€â”€ */}
         <div className="lg-bottom-grid">
           <div className="glass glass--frosted lg-chart-card">
             <div className="lg-chart-header">
@@ -1332,7 +1342,7 @@ function Dashboard() {
                 <circle cx={svgPath.last[0]}  cy={svgPath.last[1]}  r="5.5" fill="#b490f5" style={{filter:"drop-shadow(0 0 7px #b490f5)"}} />
               </>) : (
                 <g>
-                  <text x="300" y="88" textAnchor="middle" fill="rgba(255,255,255,0.25)" fontSize="13">📈</text>
+                  <text x="300" y="88" textAnchor="middle" fill="rgba(255,255,255,0.25)" fontSize="13">ðŸ“ˆ</text>
                   <text x="300" y="112" textAnchor="middle" fill="rgba(255,255,255,0.25)" fontSize="11" fontFamily="DM Mono,monospace">Belum ada data trade.</text>
                   <text x="300" y="132" textAnchor="middle" fill="rgba(255,255,255,0.14)" fontSize="10" fontFamily="DM Mono,monospace">Catat trade pertama untuk melihat equity curve.</text>
                 </g>
@@ -1363,7 +1373,7 @@ function Dashboard() {
           </div>
         </div>
 
-        {/* ─── AI Chat mobile sheet ─── */}
+        {/* â”€â”€â”€ AI Chat mobile sheet â”€â”€â”€ */}
         <div style={{marginTop:24,position:"relative",zIndex:2}}>
           <AiChat />
         </div>
