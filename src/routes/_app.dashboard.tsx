@@ -1429,7 +1429,7 @@ function Dashboard() {
         defaultPeriod="month"
         initialCapital={Number(profile?.initial_capital ?? 0)}
       />
-    </>) /* end !isLoading && !isError */}
+    </>)}
     </>
   );
 }
