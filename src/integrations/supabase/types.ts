@@ -72,27 +72,36 @@ export type Database = {
         Row: {
           created_at: string
           currency: string
+          daily_target: number
           display_name: string | null
           id: string
           initial_capital: number
+          max_loss_limit: number
+          mood: string | null
           onboarded: boolean
           updated_at: string
         }
         Insert: {
           created_at?: string
           currency?: string
+          daily_target?: number
           display_name?: string | null
           id: string
           initial_capital?: number
+          max_loss_limit?: number
+          mood?: string | null
           onboarded?: boolean
           updated_at?: string
         }
         Update: {
           created_at?: string
           currency?: string
+          daily_target?: number
           display_name?: string | null
           id?: string
           initial_capital?: number
+          max_loss_limit?: number
+          mood?: string | null
           onboarded?: boolean
           updated_at?: string
         }
